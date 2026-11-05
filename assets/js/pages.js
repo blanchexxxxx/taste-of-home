@@ -5,7 +5,7 @@
 
   function locOf(p) { return p.location ? window.LOCATIONS[p.location] : null; }
 
-  /* ---------- home: liquid ball cluster with real physics ---------- */
+  /* ---------- home: bouncing balls with real physics (separate, no goo) ---------- */
   var blobs = document.getElementById('blobs');
   if (blobs && window.HERO_PHOTOS) {
     var photos = window.HERO_PHOTOS.slice(0, 5);
@@ -13,7 +13,7 @@
     var BIG_R = 0.30, SMALL_R = [0.075, 0.055, 0.068, 0.05, 0.062]; // radii as a fraction of box width
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var gooBox = blobs.querySelector('.blobs__goo'), picBox = blobs.querySelector('.blobs__pics');
-    var W = 1, big = 0;
+    var W = 1, big = 0, RIM = 0.012;                 // RIM: gradient ring around the big photo
 
     var balls = photos.map(function (ph, i) {
       var g = document.createElement('span'); g.className = 'ball'; g.style.setProperty('--c', COLORS[i % COLORS.length]);
@@ -41,10 +41,11 @@
         b = balls[i];
         b.r += (b.tr - b.r) * 0.08;                         // grow / shrink smoothly
         if (b === drag) continue;
-        var pull = i === big ? 0.010 : 0.0045;             // attraction to the centre (big one anchored harder)
-        b.vx += (0.5 - b.x) * pull + (Math.random() - 0.5) * 0.00045;   // + a little Brownian jitter
-        b.vy += (0.5 - b.y) * pull + (Math.random() - 0.5) * 0.00045;
-        b.vx *= 0.9; b.vy *= 0.9;                           // viscous liquid
+        var pull = i === big ? 0.004 : 0.0009;             // weak pull to the centre so balls stay in view (big one anchored harder)
+        b.vx += (0.5 - b.x) * pull + (Math.random() - 0.5) * 0.0003;    // + a little random drift
+        b.vy += (0.5 - b.y) * pull + (Math.random() - 0.5) * 0.0003;
+        b.vx *= 0.985; b.vy *= 0.985;                       // light air drag
+        var sp = Math.hypot(b.vx, b.vy); if (sp > 0.03) { b.vx *= 0.03 / sp; b.vy *= 0.03 / sp; }
         b.x += b.vx; b.y += b.vy;
       }
       for (i = 0; i < n; i++) for (j = i + 1; j < n; j++) {  // small balls gently keep their distance, so they spread around the big one
@@ -56,15 +57,15 @@
         for (i = 0; i < n; i++) for (j = i + 1; j < n; j++) {
           var a = balls[i], c = balls[j];
           var dx = c.x - a.x, dy = c.y - a.y, dist = Math.sqrt(dx * dx + dy * dy) || 1e-6;
-          var min = a.r + c.r + 0.016;                      // small gap: balls stay round, the goo bridges them
+          var min = a.r + c.r + 0.004 + (i === big || j === big ? RIM : 0); // touch, then bounce (big one has a rim)
           if (dist >= min) continue;
           var nx = dx / dist, ny = dy / dist, over = min - dist;
           var ma = a === drag ? 1e6 : a.r * a.r, mc = c === drag ? 1e6 : c.r * c.r, tot = ma + mc;
           a.x -= nx * over * mc / tot; a.y -= ny * over * mc / tot;
           c.x += nx * over * ma / tot; c.y += ny * over * ma / tot;
-          var rv = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;  // bounce (restitution 0.35)
+          var rv = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;  // bounce (restitution 0.85)
           if (rv < 0) {
-            var imp = -1.35 * rv / (1 / ma + 1 / mc);
+            var imp = -1.85 * rv / (1 / ma + 1 / mc);
             if (a !== drag) { a.vx -= imp * nx / ma; a.vy -= imp * ny / ma; }
             if (c !== drag) { c.vx += imp * nx / mc; c.vy += imp * ny / mc; }
           }
@@ -72,17 +73,17 @@
       }
       for (i = 0; i < n; i++) {                             // stay inside the box
         b = balls[i];
-        if (b.x < b.r) { b.x = b.r; b.vx = Math.abs(b.vx) * 0.4; }
-        if (b.x > 1 - b.r) { b.x = 1 - b.r; b.vx = -Math.abs(b.vx) * 0.4; }
-        if (b.y < b.r) { b.y = b.r; b.vy = Math.abs(b.vy) * 0.4; }
-        if (b.y > 1 - b.r) { b.y = 1 - b.r; b.vy = -Math.abs(b.vy) * 0.4; }
+        if (b.x < b.r) { b.x = b.r; b.vx = Math.abs(b.vx) * 0.8; }
+        if (b.x > 1 - b.r) { b.x = 1 - b.r; b.vx = -Math.abs(b.vx) * 0.8; }
+        if (b.y < b.r) { b.y = b.r; b.vy = Math.abs(b.vy) * 0.8; }
+        if (b.y > 1 - b.r) { b.y = 1 - b.r; b.vy = -Math.abs(b.vy) * 0.8; }
       }
     }
     function render() {
       var R = BIG_R * W;                                     // elements are sized for the big radius, then scaled
-      balls.forEach(function (b) {
+      balls.forEach(function (b, k) {
         var tx = b.x * W - R, ty = b.y * W - R, sc = b.r / BIG_R;
-        b.g.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (sc + 0.012 / BIG_R) + ')';
+        b.g.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (k === big ? sc + RIM / BIG_R : sc) + ')';
         b.pc.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
       });
     }

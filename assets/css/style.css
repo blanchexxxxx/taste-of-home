@@ -131,14 +131,13 @@ a { color: inherit; }
 .hero__sub { max-width: 34ch; margin: 26px 0 32px; font-size: clamp(1.08rem, 1.6vw, 1.3rem); color: var(--muted); line-height: 1.5; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* liquid ball cluster (physics in pages.js): solid-colour droplets in a "goo" layer;
+/* bouncing balls (physics in pages.js): separate solid-colour balls that collide and bounce;
    only the big ball shows its photo. Click a small ball to make it big; drag to throw. */
 .blobs { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .blobs.is-over { cursor: grab; }
 .blobs.is-dragging { cursor: grabbing; }
 .blobs__defs { position: absolute; }
 .blobs__goo, .blobs__pics { position: absolute; inset: 0; pointer-events: none; }
-.blobs__goo { filter: url(#goo); }
 .ball, .pic { position: absolute; left: 0; top: 0; border-radius: 50%; transform-origin: 50% 50%; will-change: transform; }
 .ball { background: var(--c, var(--lime)); }
 .ball.is-big { background: var(--grad); }
