@@ -9,33 +9,58 @@
   var blobs = document.getElementById('blobs');
   if (blobs && window.HERO_PHOTOS) {
     var photos = window.HERO_PHOTOS.slice(0, 5);
-    var pics = blobs.querySelector('.blobs__pics'), goo = blobs.querySelector('.blobs__goo');
-    goo.innerHTML = photos.map(function () { return '<span class="goo"></span>'; }).join('');
+    var BIG = 78;                                    // big circle diameter, % of the box (matches CSS width)
+    // slot 0 = big; the rest are small, scattered and clear of the big one. [centerX%, centerY%, diameter%]
+    var SLOTS = [[46, 45, 78], [93, 8, 14], [97, 52, 10], [89, 92, 14], [6, 93, 11]];
+    var pics = blobs.querySelector('.blobs__pics'), gooBox = blobs.querySelector('.blobs__goo');
+    gooBox.innerHTML = photos.map(function () { return '<span class="goo"></span>'; }).join('');
     pics.innerHTML = photos.map(function (ph, i) {
-      return '<button type="button" class="blob" data-i="' + i + '" aria-label="' + esc(ph.alt) + '">' +
-        '<img src="' + esc(ph.src) + '" alt="' + esc(ph.alt) + '" decoding="async"' + (i > 1 ? ' loading="lazy"' : '') + '></button>';
+      return '<button type="button" class="blob" style="--i:' + i + '" data-i="' + i + '" aria-label="' + esc(ph.alt) + '">' +
+        '<img src="' + esc(ph.src) + '" alt="" decoding="async"></button>';
     }).join('');
-    var cap = document.createElement('span');
-    cap.className = 'blobs__cap';
-    blobs.appendChild(cap);
-    function activate(i) {
-      if (i == null) { blobs.removeAttribute('data-active'); return; }
-      blobs.setAttribute('data-active', i);
-      cap.textContent = photos[i].alt;
+    var els = pics.querySelectorAll('.blob'), goos = gooBox.querySelectorAll('.goo');
+    var cap = document.createElement('span'); cap.className = 'blobs__cap'; blobs.appendChild(cap);
+    var slotOf = photos.map(function (_, i) { return i; });   // photo i sits in slot slotOf[i]
+    var big = 0, locked = null;
+
+    function place() {
+      var W = blobs.clientWidth, size = W * BIG / 100;
+      for (var i = 0; i < els.length; i++) {
+        var sl = SLOTS[slotOf[i]], sc = sl[2] / BIG;
+        var tx = sl[0] / 100 * W - size / 2, ty = sl[1] / 100 * W - size / 2;
+        els[i].style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+        goos[i].style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (sc * 1.045) + ')';
+        var isBig = slotOf[i] === 0;
+        els[i].classList.toggle('is-big', isBig); goos[i].classList.toggle('is-big', isBig);
+        els[i].tabIndex = 0;
+      }
     }
+    function caption() {
+      cap.classList.add('is-fading');
+      setTimeout(function () { cap.textContent = photos[big].alt; cap.classList.remove('is-fading'); }, 250);
+    }
+    function makeBig(i) {
+      if (i === big) return;
+      var s = slotOf[i]; slotOf[big] = s; slotOf[i] = 0;
+      locked = els[big];            // the old big one lands under the cursor: ignore it until the pointer leaves it
+      big = i; place(); caption();
+    }
+    cap.textContent = photos[0].alt;
+    place();
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(place, 120); });
+
     pics.addEventListener('pointerover', function (e) {
-      var b = e.target.closest('.blob');
-      if (b && e.pointerType === 'mouse') activate(b.getAttribute('data-i'));
+      if (e.pointerType !== 'mouse') return;
+      var b = e.target.closest('.blob'); if (!b || b === locked) return;
+      makeBig(+b.getAttribute('data-i'));
     });
-    pics.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') activate(null); });
-    // touch / keyboard: tap or focus toggles
-    pics.addEventListener('click', function (e) {
-      var b = e.target.closest('.blob'); if (!b) return;
-      var i = b.getAttribute('data-i');
-      activate(blobs.getAttribute('data-active') === i && !matchMedia('(hover: hover)').matches ? null : i);
+    pics.addEventListener('pointerout', function (e) {
+      if (locked && e.target.closest('.blob') === locked && !locked.contains(e.relatedTarget)) locked = null;
     });
-    pics.addEventListener('focusin', function (e) { var b = e.target.closest('.blob'); if (b) activate(b.getAttribute('data-i')); });
-    pics.addEventListener('focusout', function () { activate(null); });
+    pics.addEventListener('click', function (e) { var b = e.target.closest('.blob'); if (b) makeBig(+b.getAttribute('data-i')); });
+    pics.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { var b = e.target.closest('.blob'); if (b) { e.preventDefault(); makeBig(+b.getAttribute('data-i')); } }
+    });
   }
 
   /* ---------- info: photo credits ---------- */
