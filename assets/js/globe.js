@@ -194,6 +194,10 @@
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.rotateSpeed = 0.6;
+    // Horizontal drag only: lock the vertical (polar) angle to the starting view.
+    var cam = globe.camera().position, polar = Math.acos(Math.max(-1, Math.min(1, cam.y / cam.length())));
+    controls.minPolarAngle = polar;
+    controls.maxPolarAngle = polar;
     controls.autoRotate = !reduceMotion;
     controls.autoRotateSpeed = 0.45;
 
@@ -224,7 +228,7 @@
 
     function openFor(d) {
       popupOpen = true; syncRotate();
-      globe.pointOfView({ lat: d.lat + d.label[0] / 3, lng: d.lng + d.label[1] / 3, altitude: globe.pointOfView().altitude }, 700);
+      var pov = globe.pointOfView(); globe.pointOfView({ lat: pov.lat, lng: d.lng + d.label[1] / 3, altitude: pov.altitude }, 700); // turn left/right only
       T.openModal(d.posts, function () { popupOpen = false; syncRotate(); });
     }
 
