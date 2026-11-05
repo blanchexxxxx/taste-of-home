@@ -5,24 +5,29 @@
 
   function locOf(p) { return p.location ? window.LOCATIONS[p.location] : null; }
 
-  /* ---------- home: bouncing balls with real physics (separate, no goo) ---------- */
+  /* ---------- home: droplet balls with real physics ----------
+     Behaves like immiscible droplets in oil: slow wandering drift, heavy drag, soft low-bounce
+     contacts, and a slight squash where two droplets press together. Every ball moves freely. */
   var blobs = document.getElementById('blobs');
   if (blobs && window.HERO_PHOTOS) {
     var photos = window.HERO_PHOTOS.slice(0, 5);
     var COLORS = ['#a6f53b', '#c6f23c', '#ddf13d', '#f2ea3f', '#b8f43b'];
-    var BIG_R = 0.30, SMALL_R = [0.075, 0.055, 0.068, 0.05, 0.062]; // radii as a fraction of box width
+    var BIG_R = 0.27, SMALL_R = [0.075, 0.055, 0.068, 0.05, 0.062]; // radii as a fraction of box width
+    var RIM = 0.012;                                   // gradient ring around the big photo
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var gooBox = blobs.querySelector('.blobs__goo'), picBox = blobs.querySelector('.blobs__pics');
-    var W = 1, big = 0, RIM = 0.012;                 // RIM: gradient ring around the big photo
+    var W = 1, big = 0;
+    // loose, off-centre starting spots
+    var START = [[0.40, 0.44], [0.82, 0.18], [0.86, 0.62], [0.22, 0.86], [0.70, 0.88]];
 
     var balls = photos.map(function (ph, i) {
       var g = document.createElement('span'); g.className = 'ball'; g.style.setProperty('--c', COLORS[i % COLORS.length]);
       var pc = document.createElement('span'); pc.className = 'pic';
       pc.innerHTML = '<img src="' + esc(ph.src) + '" alt="' + esc(ph.alt) + '" decoding="async">';
       gooBox.appendChild(g); picBox.appendChild(pc);
-      var ang = i * 2.4, d = i ? 0.33 : 0;          // start roughly around the centre
-      return { g: g, pc: pc, x: 0.5 + Math.cos(ang) * d, y: 0.5 + Math.sin(ang) * d, vx: 0, vy: 0,
-               r: i ? SMALL_R[i] : BIG_R, tr: i ? SMALL_R[i] : BIG_R, small: SMALL_R[i] };
+      return { g: g, pc: pc, x: START[i][0], y: START[i][1], vx: 0, vy: 0,
+               r: i ? SMALL_R[i] : BIG_R, tr: i ? SMALL_R[i] : BIG_R, small: SMALL_R[i],
+               dir: Math.random() * Math.PI * 2, sq: 0, sqa: 0, px: 0, py: 0 };
     });
 
     function setBig(i) {
@@ -35,70 +40,76 @@
 
     // --- simulation (units: fraction of box width; one step = 1/60 s) ---
     var drag = null;
+    var DRAG = 0.955, VMAX = 0.0045, WANDER = 0.000022, BOUNCE = 0.15;
+    function radius(b, k) { return b.r + (k === big ? RIM : 0); }
     function step() {
       var n = balls.length, i, j, b;
       for (i = 0; i < n; i++) {
         b = balls[i];
-        b.r += (b.tr - b.r) * 0.08;                         // grow / shrink smoothly
+        b.r += (b.tr - b.r) * 0.06;                                   // grow / shrink smoothly
+        b.px = 0; b.py = 0;                                           // contact pressure (for squash)
         if (b === drag) continue;
-        var pull = i === big ? 0.004 : 0.0009;             // weak pull to the centre so balls stay in view (big one anchored harder)
-        b.vx += (0.5 - b.x) * pull + (Math.random() - 0.5) * 0.0003;    // + a little random drift
-        b.vy += (0.5 - b.y) * pull + (Math.random() - 0.5) * 0.0003;
-        b.vx *= 0.985; b.vy *= 0.985;                       // light air drag
-        var sp = Math.hypot(b.vx, b.vy); if (sp > 0.03) { b.vx *= 0.03 / sp; b.vy *= 0.03 / sp; }
+        b.dir += (Math.random() - 0.5) * 0.12;                        // slowly wandering direction
+        var acc = WANDER * Math.sqrt(0.06 / b.r);                     // heavier (bigger) drops wander less
+        b.vx = (b.vx + Math.cos(b.dir) * acc) * DRAG;
+        b.vy = (b.vy + Math.sin(b.dir) * acc) * DRAG;
+        var sp = Math.hypot(b.vx, b.vy); if (sp > VMAX) { b.vx *= VMAX / sp; b.vy *= VMAX / sp; }
         b.x += b.vx; b.y += b.vy;
       }
-      for (i = 0; i < n; i++) for (j = i + 1; j < n; j++) {  // small balls gently keep their distance, so they spread around the big one
-        if (i === big || j === big) continue;
-        var p1 = balls[i], p2 = balls[j], ex = p2.x - p1.x, ey = p2.y - p1.y, ed = Math.sqrt(ex * ex + ey * ey) || 1e-6;
-        if (ed < 0.3) { var f = 0.0009 * (0.3 - ed) / 0.3; p1.vx -= ex / ed * f; p1.vy -= ey / ed * f; p2.vx += ex / ed * f; p2.vy += ey / ed * f; }
-      }
-      for (var it = 0; it < 3; it++) {                      // resolve collisions
+      for (var it = 0; it < 2; it++) {
         for (i = 0; i < n; i++) for (j = i + 1; j < n; j++) {
           var a = balls[i], c = balls[j];
           var dx = c.x - a.x, dy = c.y - a.y, dist = Math.sqrt(dx * dx + dy * dy) || 1e-6;
-          var min = a.r + c.r + 0.004 + (i === big || j === big ? RIM : 0); // touch, then bounce (big one has a rim)
+          var min = radius(a, i) + radius(c, j) + 0.003;
           if (dist >= min) continue;
           var nx = dx / dist, ny = dy / dist, over = min - dist;
           var ma = a === drag ? 1e6 : a.r * a.r, mc = c === drag ? 1e6 : c.r * c.r, tot = ma + mc;
-          a.x -= nx * over * mc / tot; a.y -= ny * over * mc / tot;
-          c.x += nx * over * ma / tot; c.y += ny * over * ma / tot;
-          var rv = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;  // bounce (restitution 0.85)
-          if (rv < 0) {
-            var imp = -1.85 * rv / (1 / ma + 1 / mc);
+          var push = over * 0.5;                                      // soft separation, not an instant snap
+          a.x -= nx * push * mc / tot; a.y -= ny * push * mc / tot;
+          c.x += nx * push * ma / tot; c.y += ny * push * ma / tot;
+          var rv = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;
+          if (rv < 0) {                                               // low bounce, like droplets
+            var imp = -(1 + BOUNCE) * rv / (1 / ma + 1 / mc);
             if (a !== drag) { a.vx -= imp * nx / ma; a.vy -= imp * ny / ma; }
             if (c !== drag) { c.vx += imp * nx / mc; c.vy += imp * ny / mc; }
           }
+          a.px -= nx * over; a.py -= ny * over; c.px += nx * over; c.py += ny * over;
         }
       }
-      for (i = 0; i < n; i++) {                             // stay inside the box
-        b = balls[i];
-        if (b.x < b.r) { b.x = b.r; b.vx = Math.abs(b.vx) * 0.8; }
-        if (b.x > 1 - b.r) { b.x = 1 - b.r; b.vx = -Math.abs(b.vx) * 0.8; }
-        if (b.y < b.r) { b.y = b.r; b.vy = Math.abs(b.vy) * 0.8; }
-        if (b.y > 1 - b.r) { b.y = 1 - b.r; b.vy = -Math.abs(b.vy) * 0.8; }
+      for (i = 0; i < n; i++) {                                       // soft walls
+        b = balls[i]; var rr = radius(b, i), hit = false;
+        if (b.x < rr) { b.x += (rr - b.x) * 0.5; b.vx = Math.abs(b.vx) * BOUNCE; b.dir = Math.PI - b.dir; b.px -= rr - b.x; hit = true; }
+        if (b.x > 1 - rr) { b.x -= (b.x - 1 + rr) * 0.5; b.vx = -Math.abs(b.vx) * BOUNCE; b.dir = Math.PI - b.dir; b.px += b.x - 1 + rr; hit = true; }
+        if (b.y < rr) { b.y += (rr - b.y) * 0.5; b.vy = Math.abs(b.vy) * BOUNCE; b.dir = -b.dir; b.py -= rr - b.y; hit = true; }
+        if (b.y > 1 - rr) { b.y -= (b.y - 1 + rr) * 0.5; b.vy = -Math.abs(b.vy) * BOUNCE; b.dir = -b.dir; b.py += b.y - 1 + rr; hit = true; }
+        // squash along the contact direction, then relax back to round
+        var p = Math.hypot(b.px, b.py), target = Math.min(0.09, p / rr * 1.6);
+        if (p > 1e-5) b.sqa = Math.atan2(b.py, b.px);
+        b.sq += (target - b.sq) * 0.18;
       }
     }
     function render() {
-      var R = BIG_R * W;                                     // elements are sized for the big radius, then scaled
+      var R = (BIG_R + RIM) * W;                                       // elements are sized for the big drop, then scaled
       balls.forEach(function (b, k) {
-        var tx = b.x * W - R, ty = b.y * W - R, sc = b.r / BIG_R;
-        b.g.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (k === big ? sc + RIM / BIG_R : sc) + ')';
-        b.pc.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
+        var tx = b.x * W - R, ty = b.y * W - R, deg = b.sqa * 180 / Math.PI;
+        var sg = radius(b, k) / (BIG_R + RIM), sp = b.r / (BIG_R + RIM);
+        var squash = ' rotate(' + deg + 'deg) scale(' + (1 - b.sq) + ',' + (1 + b.sq * 0.6) + ') rotate(' + (-deg) + 'deg)';
+        b.g.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sg + ')' + squash;
+        b.pc.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sp + ')' + squash;
       });
     }
     function resize() {
       W = blobs.clientWidth || 1;
-      var d = 2 * BIG_R * W + 'px';
+      var d = 2 * (BIG_R + RIM) * W + 'px';
       balls.forEach(function (b) { b.g.style.width = b.g.style.height = d; b.pc.style.width = b.pc.style.height = d; });
       render();
     }
 
-    var running = false, visible = true, last = 0, acc = 0;
+    var running = false, visible = true, last = 0, accT = 0;
     function frame(t) {
       if (!running) return;
-      acc += Math.min(t - (last || t), 100); last = t;
-      while (acc >= 16.67) { step(); acc -= 16.67; }
+      accT += Math.min(t - (last || t), 100); last = t;
+      while (accT >= 16.67) { step(); accT -= 16.67; }
       render();
       requestAnimationFrame(frame);
     }
@@ -109,7 +120,7 @@
     function sleep() { running = false; }
 
     resize();
-    for (var k0 = 0; k0 < 200; k0++) step();               // settle before first paint
+    for (var k0 = 0; k0 < 120; k0++) step();               // settle before first paint
     render();
     window.addEventListener('resize', resize);
     if ('IntersectionObserver' in window) {
@@ -118,10 +129,10 @@
     document.addEventListener('visibilitychange', function () { if (document.hidden) sleep(); else wake(); });
     wake();
 
-    // --- pointer: click a small ball to make it big; drag (mouse) to throw a ball ---
+    // --- pointer: click a small ball to make it big; drag (mouse) to push a ball around ---
     function hit(e) {
       var r = blobs.getBoundingClientRect(), px = (e.clientX - r.left) / W, py = (e.clientY - r.top) / W, best = null, bd = 1e9;
-      balls.forEach(function (b) { var d = Math.hypot(px - b.x, py - b.y); if (d < b.r + 0.01 && d < bd) { bd = d; best = b; } });
+      balls.forEach(function (b, k) { var d = Math.hypot(px - b.x, py - b.y); if (d < radius(b, k) + 0.01 && d < bd) { bd = d; best = b; } });
       return { b: best, x: px, y: py };
     }
     var down = null;
@@ -136,8 +147,10 @@
       if (!down.moved && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 5) return;
       down.moved = true; drag = down.b; blobs.classList.add('is-dragging');
       var h = hit(e);
-      drag.vx = Math.max(-0.05, Math.min(0.05, h.x - down.lx)); drag.vy = Math.max(-0.05, Math.min(0.05, h.y - down.ly)); // throw velocity
-      drag.x = h.x; drag.y = h.y; down.lx = h.x; down.ly = h.y;
+      drag.vx = Math.max(-VMAX * 2, Math.min(VMAX * 2, (h.x - down.lx) * 0.5));
+      drag.vy = Math.max(-VMAX * 2, Math.min(VMAX * 2, (h.y - down.ly) * 0.5));
+      drag.x += (h.x - drag.x) * 0.35; drag.y += (h.y - drag.y) * 0.35;   // follows the cursor with a little lag, like a drop
+      down.lx = h.x; down.ly = h.y;
       wake();
     });
     function up() {
