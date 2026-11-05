@@ -1,0 +1,12 @@
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Inputs for tools/bake_globe.py (download when needed)
+*.geojson
+
+# Python
+__pycache__/
