@@ -1,3 +1,4 @@
+<a id="top"></a>
 <div align="center">
 
 # Taste of Home
@@ -8,11 +9,15 @@ An English class project by five students from China, Indonesia, Myanmar and Sri
 
 [**Visit the site →**](https://blanchexxxxx.github.io/taste-of-home/)
 
-English · [中文](#中文说明)
+<a href="#english"><img src="https://img.shields.io/badge/English-a6f53b?style=for-the-badge" alt="English"></a>
+<a href="#中文说明"><img src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87-d4f53c?style=for-the-badge" alt="中文"></a>
+<a href="#日本語"><img src="https://img.shields.io/badge/%E6%97%A5%E6%9C%AC%E8%AA%9E-f6ec3f?style=for-the-badge" alt="日本語"></a>
 
 ![Home page](docs/home.jpg)
 
 </div>
+
+<a id="english"></a>
 
 ## What's inside
 
@@ -99,6 +104,9 @@ When you change CSS or JS, bump the `?v=` number on the `<link>` and `<script>` 
 
 The site's code is released under the [MIT License](LICENSE). Bundled libraries, the font, icons, map data and placeholder photos keep their own licenses, listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): [globe.gl](https://github.com/vasturiano/globe.gl) (MIT), [Phosphor Icons](https://phosphoricons.com) (MIT), [Outfit](https://github.com/Outfitio/Outfit-Fonts) (OFL), [Natural Earth](https://www.naturalearthdata.com) (public domain) and photos from Wikimedia Commons (CC0 / CC BY-SA). The students' own posts, videos and photos belong to their authors.
 
+
+<p align="right"><a href="#top">↑ Back to top</a></p>
+
 ---
 
 <a id="中文说明"></a>
@@ -133,3 +141,42 @@ The site's code is released under the [MIT License](LICENSE). Bundled libraries,
 ### 许可证
 
 网站代码采用 [MIT 许可证](LICENSE) 开源，任何人都可以自由使用和修改。第三方的库、字体、图标、地图数据和占位照片保留各自的许可证，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。同学们自己的帖子、视频和照片版权归各自作者所有。
+
+<p align="right"><a href="#top">↑ 回到顶部</a></p>
+
+---
+
+<a id="日本語"></a>
+
+## 日本語
+
+**Taste of Home** は英語の授業のプロジェクトサイトです。中国、インドネシア、ミャンマー、スリランカから来た 5 人の留学生が、それぞれふるさとの家庭料理を短い動画と文章で紹介します。
+
+サイト：https://blanchexxxxx.github.io/taste-of-home/
+
+### 機能
+
+- **3D 地球儀**：左右にドラッグして回せます。普段はゆっくり自転し、地球やラベルにマウスを置くと止まります。各学生の街には、立体的な引き出し線でつながった浮かぶラベルがあります。
+- **ラベルをクリック**すると、料理名と動画の小窓が開きます。**Detail** を押すと投稿の全文が読めます。
+- **7 言語対応**：English、简体中文、日本語、Bahasa Indonesia、မြန်မာ、සිංහල、தமிழ்。最初はパソコンのシステム言語で表示され（対応していない場合は英語）、切り替えた言語は記憶されます。
+- **トップページの水滴写真**：小さな物理シミュレーションです。玉はゆっくり漂い、やわらかくぶつかり合い、マウスでドラッグできます。小さな玉をクリックすると、その写真が大きく表示されます。
+- **どこでも軽快に表示**：
+  - ビルド不要で、外部 CDN やウェブフォントにも依存しないため、中国本土からでも問題なく開けます。
+  - 地球儀のライブラリは近くまでスクロールしたときに読み込み、画面外では描画を止めます。
+  - 性能の低い端末では軽いテクスチャを使い、WebGL に対応していないブラウザでは一覧表示に切り替わります。
+
+### 自分の投稿を追加する（クラスメイト向け）
+
+編集するのは **[`assets/js/data.js`](assets/js/data.js)** だけです。`POSTS` の中から自分の項目を探し、作成者・タイトル・紹介文・本文・動画を書き込みます（書き方は英語セクションの例を参照）。
+
+- `null` のままの項目には「近日公開」と表示されます。
+- 動画は圧縮した mp4（50MB 以内）を `assets/videos/` に置くか、埋め込み URL を使います。中国本土では YouTube が見られないため、Bilibili かリポジトリ内のファイルがおすすめです。
+- GitHub のウェブ画面から直接編集できます。ファイルを開いて鉛筆アイコンを押し、変更をコミットするだけで、ソフトのインストールは不要です。約 1 分後にサイトが自動で更新されます。
+
+そのほか変更できる内容（街の座標、トップページの写真、翻訳、色、水滴の物理パラメータ、地球儀のテクスチャ）は、英語セクションの表を参照してください。
+
+### ライセンス
+
+サイトのコードは [MIT ライセンス](LICENSE) で公開しており、誰でも自由に使用・改変できます。同梱しているライブラリ、フォント、アイコン、地図データ、仮の写真はそれぞれのライセンスに従います。詳しくは [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) を参照してください。学生自身の投稿・動画・写真の著作権は、それぞれの作者に帰属します。
+
+<p align="right"><a href="#top">↑ トップへ戻る</a></p>
