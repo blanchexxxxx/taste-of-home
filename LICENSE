@@ -20,8 +20,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
--------------------------------------------------------------------------------
-This license covers the website's own code (HTML, CSS, JavaScript and the
-scripts in tools/). Bundled third-party libraries, fonts, icons, map data and
-photos keep their own licenses: see THIRD_PARTY_NOTICES.md. Posts, videos and
-photos written or made by the students are copyright their authors.
