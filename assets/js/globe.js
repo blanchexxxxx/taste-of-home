@@ -28,7 +28,7 @@
     });
     return Object.keys(groups).map(function (k) {
       var l = window.LOCATIONS[k];
-      return { key: k, lat: l.lat, lng: l.lng, country: l.country, city: l.city, code: l.code, side: l.side, posts: groups[k] };
+      return { key: k, lat: l.lat, lng: l.lng, country: l.country, city: l.city, code: l.code, side: l.side, label: l.label || [6, l.side === 'left' ? -12 : 12], posts: groups[k] };
     });
   }
 
@@ -86,32 +86,65 @@
     var lowPower = small || weak;
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    var markers = [];
+    var LABEL_ALT = small ? 0.2 : 0.3;   // how far the labels float above the surface
+    var SPREAD = small ? 0.55 : 1;       // narrow screens: keep labels closer so they stay on screen
+    var labels = [];
     var data = groupedLocations();
+    var overLabel = false;
 
-    function makeMarker(d) {
-      var el = document.createElement('button');
-      el.type = 'button';
-      el.className = 'marker' + (d.side === 'left' ? ' marker--left' : '');
-      el.innerHTML = '<span class="marker__line"></span><span class="marker__dot"></span><span class="marker__tag"><b></b><small></small></span>';
+    // Two kinds of HTML elements per location: a dot on the surface and a floating label.
+    var htmlData = [];
+    data.forEach(function (d) {
+      d.llat = d.lat + d.label[0] * SPREAD;
+      d.llng = d.lng + d.label[1] * SPREAD;
+      htmlData.push({ kind: 'dot', d: d, lat: d.lat, lng: d.lng, alt: 0.005 });
+      htmlData.push({ kind: 'label', d: d, lat: d.llat, lng: d.llng, alt: LABEL_ALT });
+    });
+
+    // Leader line: rises off the surface and curves out to the label (real 3D line, so it has depth).
+    var N = 28;
+    var paths = data.map(function (d) {
+      var pts = [];
+      for (var i = 0; i <= N; i++) {
+        var t = i / N;
+        var e = 1 - Math.pow(1 - t, 2.2);            // ease-out: climbs fast, then glides to the label
+        pts.push([d.lat + (d.llat - d.lat) * t, d.lng + (d.llng - d.lng) * t, 0.006 + (LABEL_ALT - 0.006) * Math.sin(e * Math.PI / 2)]);
+      }
+      return pts;
+    });
+
+    function bindHover(el) {
       el.style.pointerEvents = 'auto';
-      el.addEventListener('click', function (e) {
-        e.stopPropagation();
-        openFor(d);
-      });
-      // keep drag-rotate from starting when pressing on a label
-      el.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
-      d.el = el;
-      markers.push(d);
-      updateMarkerText(d);
+      el.addEventListener('pointerenter', function () { overLabel = true; syncRotate(); });
+      el.addEventListener('pointerleave', function () { overLabel = false; syncRotate(); });
+      el.addEventListener('pointerdown', function (e) { e.stopPropagation(); }); // don't start a drag from a label
+    }
+
+    function makeEl(o) {
+      var d = o.d, el = document.createElement('button');
+      el.type = 'button';
+      if (o.kind === 'dot') {
+        el.className = 'gdot';
+        el.innerHTML = '<span></span>';
+        el.tabIndex = -1;
+        el.setAttribute('aria-hidden', 'true');
+      } else {
+        el.className = 'glabel' + (d.side === 'left' ? ' glabel--left' : '');
+        el.innerHTML = '<span class="glabel__tag"><b></b><small></small></span>';
+        d.el = el;
+        labels.push(d);
+        updateLabel(d);
+      }
+      bindHover(el);
+      el.addEventListener('click', function (e) { e.stopPropagation(); openFor(d); });
       return el;
     }
-    function updateMarkerText(d) {
+    function updateLabel(d) {
       d.el.querySelector('b').textContent = T.t('country.' + d.country);
       d.el.querySelector('small').textContent = T.t('city.' + d.city);
       d.el.setAttribute('aria-label', T.t('country.' + d.country) + ', ' + T.t('city.' + d.city));
     }
-    document.addEventListener('langchange', function () { markers.forEach(updateMarkerText); });
+    document.addEventListener('langchange', function () { labels.forEach(updateLabel); });
 
     var globe = new window.Globe(holder, {
       rendererConfig: { antialias: !lowPower, alpha: true, powerPreference: 'high-performance', precision: lowPower ? 'mediump' : 'highp' },
@@ -123,9 +156,19 @@
       .atmosphereColor('#b6f23d')
       .atmosphereAltitude(0.13)
       .showGraticules(false)
-      .htmlElementsData(data)
-      .htmlLat('lat').htmlLng('lng').htmlAltitude(0.01)
-      .htmlElement(makeMarker)
+      .pathsData(paths)
+      .pathPoints(function (p) { return p; })
+      .pathPointLat(function (p) { return p[0]; })
+      .pathPointLng(function (p) { return p[1]; })
+      .pathPointAlt(function (p) { return p[2]; })
+      .pathResolution(1)
+      .pathColor(function () { return ['rgba(246, 236, 63, 0.95)', 'rgba(166, 245, 59, 0.55)']; })
+      .pathStroke(lowPower ? null : 1.6)
+      .pathTransitionDuration(0)
+      .htmlElementsData(htmlData)
+      .htmlLat('lat').htmlLng('lng').htmlAltitude('alt')
+      .htmlElement(makeEl)
+      .htmlTransitionDuration(0)
       .htmlElementVisibilityModifier(function (el, visible) {
         el.classList.toggle('is-hidden', !visible);
       });
@@ -143,7 +186,7 @@
     var rt;
     window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(size, 150); });
 
-    globe.pointOfView({ lat: 12, lng: 100, altitude: small ? 2.5 : 1.85 }, 0);
+    globe.pointOfView({ lat: 12, lng: 100, altitude: small ? 3.0 : 1.85 }, 0);
 
     var controls = globe.controls();
     controls.enableZoom = false;        // let the mouse wheel scroll the page
@@ -154,19 +197,34 @@
     controls.autoRotate = !reduceMotion;
     controls.autoRotateSpeed = 0.45;
 
-    // Auto-rotate only while the pointer is NOT on the globe and no popup is open.
-    var hovering = false, popupOpen = false;
-    function syncRotate() { controls.autoRotate = !reduceMotion && !hovering && !popupOpen; }
-    holder.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hovering = true; syncRotate(); } });
-    holder.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hovering = false; syncRotate(); } });
-    // On touch screens: stop while touching, resume a moment after.
+    // Auto-rotate stops only while the pointer is on the sphere itself or on a label/dot,
+    // while dragging, or while a popup is open. Empty space around the globe doesn't count.
+    var onSphere = false, dragging = false, popupOpen = false, pending = null;
+    function syncRotate() { controls.autoRotate = !reduceMotion && !onSphere && !overLabel && !dragging && !popupOpen; }
+    holder.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var queued = !!pending;
+      pending = e;
+      if (queued) return;           // one check per frame at most
+      requestAnimationFrame(function () {
+        var ev = pending; pending = null;
+        var r = holder.getBoundingClientRect();
+        onSphere = !!globe.toGlobeCoords(ev.clientX - r.left, ev.clientY - r.top);
+        holder.style.cursor = onSphere ? '' : 'default';
+        syncRotate();
+      });
+    });
+    holder.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { onSphere = false; syncRotate(); } });
+    holder.addEventListener('pointerdown', function () { dragging = true; syncRotate(); });
+    window.addEventListener('pointerup', function () { if (dragging) { dragging = false; syncRotate(); } });
+    // Touch screens: stop while touching, resume a moment after.
     var touchTimer;
-    holder.addEventListener('touchstart', function () { clearTimeout(touchTimer); hovering = true; syncRotate(); }, { passive: true });
-    holder.addEventListener('touchend', function () { touchTimer = setTimeout(function () { hovering = false; syncRotate(); }, 2500); }, { passive: true });
+    holder.addEventListener('touchstart', function () { clearTimeout(touchTimer); dragging = true; syncRotate(); }, { passive: true });
+    holder.addEventListener('touchend', function () { touchTimer = setTimeout(function () { dragging = false; syncRotate(); }, 2500); }, { passive: true });
 
     function openFor(d) {
       popupOpen = true; syncRotate();
-      globe.pointOfView({ lat: d.lat, lng: d.lng, altitude: globe.pointOfView().altitude }, 700);
+      globe.pointOfView({ lat: d.lat + d.label[0] / 3, lng: d.lng + d.label[1] / 3, altitude: globe.pointOfView().altitude }, 700);
       T.openModal(d.posts, function () { popupOpen = false; syncRotate(); });
     }
 
@@ -183,13 +241,6 @@
     document.addEventListener('visibilitychange', syncRun);
 
     globe.onGlobeReady(function () {
-      // Light, even look: let the texture light itself so the night side doesn't turn grey.
-      if (mat && mat.map && mat.emissive) {
-        mat.emissiveMap = mat.map;
-        mat.emissive.set('#ffffff');
-        mat.emissiveIntensity = 0.3;
-        mat.needsUpdate = true;
-      }
       if (status) status.hidden = true;
       holder.classList.add('is-ready');
     });

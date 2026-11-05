@@ -6,7 +6,7 @@
   <title>Taste of Home | Food stories from international students</title>
   <meta name="description" content="Taste of Home: home-cooked food stories and short videos from international students from China, Indonesia, Myanmar and Sri Lanka. Spin the 3D globe to explore.">
   <link rel="canonical" href="https://blanchexxxxx.github.io/taste-of-home/">
-  <meta name="theme-color" content="#f7f6f1">
+  <meta name="theme-color" content="#0e100e">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Taste of Home">
   <meta property="og:description" content="Food stories from international students. Spin the globe, pick a country, taste a memory.">
@@ -45,7 +45,15 @@
             <a class="btn" href="posts.html"><span data-i18n="hero.ctaPosts">See all posts</span><span data-icon="arrow-right"></span></a>
           </div>
         </div>
-        <div class="bubbles" id="bubbles"></div>
+        <div class="slides" id="slides" aria-roledescription="carousel">
+          <div class="slides__bar">
+            <div class="slides__dots" id="slidesDots"></div>
+            <div class="slides__nav">
+              <button type="button" id="slidesPrev" aria-label="Previous photo"><span data-icon="arrow-left"></span></button>
+              <button type="button" id="slidesNext" aria-label="Next photo"><span data-icon="arrow-right"></span></button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
