@@ -19,14 +19,14 @@
 
 window.LOCATIONS = {
   shenzhen:  { lat: 22.54, lng: 114.06, country: 'china',     city: 'shenzhen', code: 'CN', side: 'right', label: [7, 13] },
-  jakarta:   { lat: -6.21, lng: 106.85, country: 'indonesia', city: 'jakarta',  code: 'ID', side: 'right', label: [-9, 13] },
+  surabaya:  { lat: -7.26, lng: 112.75, country: 'indonesia', city: 'surabaya', code: 'ID', side: 'right', label: [-9, 13] },
   yangon:    { lat: 16.84, lng: 96.17,  country: 'myanmar',   city: 'yangon',   code: 'MM', side: 'left', label: [8, -12] },
   colombo:   { lat: 6.93,  lng: 79.86,  country: 'srilanka',  city: 'colombo',  code: 'LK', side: 'left', label: [-5, -14] }
 };
 
 window.POSTS = [
   { id: 'china-shenzhen', location: 'shenzhen', author: null, title: null, summary: null, body: null, video: null, poster: null },
-  { id: 'indonesia',      location: 'jakarta',  author: null, title: null, summary: null, body: null, video: null, poster: null },
+  { id: 'indonesia',      location: 'surabaya', author: null, title: null, summary: null, body: null, video: null, poster: null },
   { id: 'myanmar-1',      location: 'yangon',   author: null, title: null, summary: null, body: null, video: null, poster: null },
   { id: 'myanmar-2',      location: 'yangon',   author: null, title: null, summary: null, body: null, video: null, poster: null },
   { id: 'sri-lanka',      location: 'colombo',  author: null, title: null, summary: null, body: null, video: null, poster: null }

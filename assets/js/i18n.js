@@ -57,7 +57,7 @@ window.I18N = {
     'info.contactP': 'Contact details coming soon.',
     'footer.text': 'Made with love by international students for our English class.',
     'country.china': 'China', 'country.indonesia': 'Indonesia', 'country.myanmar': 'Myanmar', 'country.srilanka': 'Sri Lanka',
-    'city.shenzhen': 'Shenzhen', 'city.jakarta': 'Jakarta', 'city.yangon': 'Yangon', 'city.colombo': 'Colombo'
+    'city.shenzhen': 'Shenzhen', 'city.surabaya': 'Surabaya', 'city.yangon': 'Yangon', 'city.colombo': 'Colombo'
   },
 
   zh: {
@@ -105,7 +105,7 @@ window.I18N = {
     'info.contactP': '联系方式即将公布。',
     'footer.text': '由留学生们为英语课用心制作。',
     'country.china': '中国', 'country.indonesia': '印度尼西亚', 'country.myanmar': '缅甸', 'country.srilanka': '斯里兰卡',
-    'city.shenzhen': '深圳', 'city.jakarta': '雅加达', 'city.yangon': '仰光', 'city.colombo': '科伦坡'
+    'city.shenzhen': '深圳', 'city.surabaya': '泗水', 'city.yangon': '仰光', 'city.colombo': '科伦坡'
   },
 
   ja: {
@@ -153,7 +153,7 @@ window.I18N = {
     'info.contactP': '連絡先は近日公開。',
     'footer.text': '英語の授業のために、留学生たちが心を込めて作りました。',
     'country.china': '中国', 'country.indonesia': 'インドネシア', 'country.myanmar': 'ミャンマー', 'country.srilanka': 'スリランカ',
-    'city.shenzhen': '深圳', 'city.jakarta': 'ジャカルタ', 'city.yangon': 'ヤンゴン', 'city.colombo': 'コロンボ'
+    'city.shenzhen': '深圳', 'city.surabaya': 'スラバヤ', 'city.yangon': 'ヤンゴン', 'city.colombo': 'コロンボ'
   },
 
   id: {
@@ -201,7 +201,7 @@ window.I18N = {
     'info.contactP': 'Detail kontak segera hadir.',
     'footer.text': 'Dibuat dengan cinta oleh mahasiswa internasional untuk kelas bahasa Inggris kami.',
     'country.china': 'Tiongkok', 'country.indonesia': 'Indonesia', 'country.myanmar': 'Myanmar', 'country.srilanka': 'Sri Lanka',
-    'city.shenzhen': 'Shenzhen', 'city.jakarta': 'Jakarta', 'city.yangon': 'Yangon', 'city.colombo': 'Kolombo'
+    'city.shenzhen': 'Shenzhen', 'city.surabaya': 'Surabaya', 'city.yangon': 'Yangon', 'city.colombo': 'Kolombo'
   },
 
   my: {
@@ -249,7 +249,7 @@ window.I18N = {
     'info.contactP': 'ဆက်သွယ်ရန် အချက်အလက်များ မကြာမီ လာမည်။',
     'footer.text': 'ကျွန်ုပ်တို့၏ အင်္ဂလိပ်စာအတန်းအတွက် နိုင်ငံခြားကျောင်းသားများက မေတ္တာဖြင့် ပြုလုပ်ထားသည်။',
     'country.china': 'တရုတ်', 'country.indonesia': 'အင်ဒိုနီးရှား', 'country.myanmar': 'မြန်မာ', 'country.srilanka': 'သီရိလင်္ကာ',
-    'city.shenzhen': 'ရှန်ကျန်း', 'city.jakarta': 'ဂျကာတာ', 'city.yangon': 'ရန်ကုန်', 'city.colombo': 'ကိုလံဘို'
+    'city.shenzhen': 'ရှန်ကျန်း', 'city.surabaya': 'ဆူရာဘာယာ', 'city.yangon': 'ရန်ကုန်', 'city.colombo': 'ကိုလံဘို'
   },
 
   si: {
@@ -297,7 +297,7 @@ window.I18N = {
     'info.contactP': 'සම්බන්ධතා විස්තර ඉක්මනින්.',
     'footer.text': 'අපේ ඉංග්‍රීසි පන්තිය සඳහා විදේශීය සිසුන් විසින් ආදරයෙන් සාදන ලදී.',
     'country.china': 'චීනය', 'country.indonesia': 'ඉන්දුනීසියාව', 'country.myanmar': 'මියන්මාරය', 'country.srilanka': 'ශ්‍රී ලංකාව',
-    'city.shenzhen': 'ෂෙන්සෙන්', 'city.jakarta': 'ජකර්තා', 'city.yangon': 'යැංගොන්', 'city.colombo': 'කොළඹ'
+    'city.shenzhen': 'ෂෙන්සෙන්', 'city.surabaya': 'සුරබායා', 'city.yangon': 'යැංගොන්', 'city.colombo': 'කොළඹ'
   },
 
   ta: {
@@ -345,6 +345,6 @@ window.I18N = {
     'info.contactP': 'தொடர்பு விவரங்கள் விரைவில்.',
     'footer.text': 'எங்கள் ஆங்கில வகுப்பிற்காக சர்வதேச மாணவர்கள் அன்புடன் உருவாக்கியது.',
     'country.china': 'சீனா', 'country.indonesia': 'இந்தோனேசியா', 'country.myanmar': 'மியான்மர்', 'country.srilanka': 'இலங்கை',
-    'city.shenzhen': 'ஷென்சென்', 'city.jakarta': 'ஜகார்த்தா', 'city.yangon': 'யாங்கோன்', 'city.colombo': 'கொழும்பு'
+    'city.shenzhen': 'ஷென்சென்', 'city.surabaya': 'சுரபாயா', 'city.yangon': 'யாங்கோன்', 'city.colombo': 'கொழும்பு'
   }
 };
