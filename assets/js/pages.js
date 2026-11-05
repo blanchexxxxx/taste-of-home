@@ -9,9 +9,14 @@
   var blobs = document.getElementById('blobs');
   if (blobs && window.HERO_PHOTOS) {
     var photos = window.HERO_PHOTOS.slice(0, 5);
-    var BIG = 78;                                    // big circle diameter, % of the box (matches CSS width)
-    // slot 0 = big; the rest are small, scattered and clear of the big one. [centerX%, centerY%, diameter%]
-    var SLOTS = [[46, 45, 78], [93, 8, 14], [97, 52, 10], [89, 92, 14], [6, 93, 11]];
+    var BIG = 70;                                    // big circle diameter, % of the box (matches CSS width)
+    var CX = 48, CY = 46, GAP = 1;                   // big circle centre; small gap so the liquid bridges them
+    // small circles hug the big one: [angle in degrees (0 = right, 90 = down), diameter %]
+    var RING = [[-48, 16], [8, 12], [62, 15], [148, 13]];
+    var SLOTS = [[CX, CY, BIG]].concat(RING.map(function (r) {
+      var d = BIG / 2 + r[1] / 2 + GAP, a = r[0] * Math.PI / 180;
+      return [CX + Math.cos(a) * d, CY + Math.sin(a) * d, r[1]];
+    }));
     var pics = blobs.querySelector('.blobs__pics'), gooBox = blobs.querySelector('.blobs__goo');
     gooBox.innerHTML = photos.map(function () { return '<span class="goo"></span>'; }).join('');
     pics.innerHTML = photos.map(function (ph, i) {
@@ -29,7 +34,7 @@
         var sl = SLOTS[slotOf[i]], sc = sl[2] / BIG;
         var tx = sl[0] / 100 * W - size / 2, ty = sl[1] / 100 * W - size / 2;
         els[i].style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
-        goos[i].style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (sc * 1.045) + ')';
+        goos[i].style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (sc + 0.035) + ')';
         var isBig = slotOf[i] === 0;
         els[i].classList.toggle('is-big', isBig); goos[i].classList.toggle('is-big', isBig);
         els[i].tabIndex = 0;

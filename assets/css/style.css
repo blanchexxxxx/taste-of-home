@@ -131,14 +131,14 @@ a { color: inherit; }
 .hero__sub { max-width: 34ch; margin: 26px 0 32px; font-size: clamp(1.08rem, 1.6vw, 1.3rem); color: var(--muted); line-height: 1.5; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* liquid photo cluster: one big round photo + small scattered ones (positions set by JS).
+/* liquid photo cluster: one big round photo with small ones packed against it (positions set by JS).
    Hovering a small one makes it flow into the big slot. Small ones get a multiply tint. */
 .blobs { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end; }
 .blobs__defs { position: absolute; }
 .blobs__goo, .blobs__pics { position: absolute; inset: 0; }
 .blobs__goo { filter: url(#goo); }
 .blob, .goo {
-  position: absolute; left: 0; top: 0; width: 78%; aspect-ratio: 1; border-radius: 50%;
+  position: absolute; left: 0; top: 0; width: 70%; aspect-ratio: 1; border-radius: 50%;
   transform-origin: 50% 50%;
   transition: transform .95s cubic-bezier(.34, 1.4, .5, 1), filter .5s var(--ease), background-color .6s var(--ease);
   will-change: transform;
@@ -160,7 +160,7 @@ a { color: inherit; }
   66% { border-radius: 53% 47% 51% 49% / 47% 53% 48% 52%; }
 }
 .blobs__cap {
-  position: absolute; left: 46%; bottom: 1%; translate: -50% 0; z-index: 3; white-space: nowrap;
+  position: absolute; left: 44%; top: 86%; translate: -50% 0; z-index: 3; white-space: nowrap;
   padding: 8px 16px; border-radius: 999px; background: rgba(23, 27, 22, .82); border: 1px solid rgba(238, 241, 232, .16);
   font-size: .9rem; color: var(--ink); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   pointer-events: none; transition: opacity .3s var(--ease);
