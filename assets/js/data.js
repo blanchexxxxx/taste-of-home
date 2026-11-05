@@ -12,6 +12,7 @@
          or 'https://player.bilibili.com/player.html?bvid=BVxxxx'
    - poster: optional cover image, e.g. 'assets/img/shenzhen.jpg'
    - location: one of the keys in LOCATIONS below (or null if unknown).
+     Posts that share a location share one globe label; the popup lists them all.
    - side: which side of the dot the globe label sits on ('left' / 'right').
    ============================================================ */
 
@@ -23,10 +24,9 @@ window.LOCATIONS = {
 };
 
 window.POSTS = [
-  { id: 'china-shenzhen',   location: 'shenzhen', author: null, title: null, summary: null, body: null, video: null, poster: null },
-  { id: 'indonesia',        location: 'jakarta',  author: null, title: null, summary: null, body: null, video: null, poster: null },
-  { id: 'myanmar',          location: 'yangon',   author: null, title: null, summary: null, body: null, video: null, poster: null },
-  { id: 'sri-lanka',        location: 'colombo',  author: null, title: null, summary: null, body: null, video: null, poster: null },
-  { id: 'post-5',           location: null,       author: null, title: null, summary: null, body: null, video: null, poster: null },
-  { id: 'post-6',           location: null,       author: null, title: null, summary: null, body: null, video: null, poster: null }
+  { id: 'china-shenzhen', location: 'shenzhen', author: null, title: null, summary: null, body: null, video: null, poster: null },
+  { id: 'indonesia',      location: 'jakarta',  author: null, title: null, summary: null, body: null, video: null, poster: null },
+  { id: 'myanmar-1',      location: 'yangon',   author: null, title: null, summary: null, body: null, video: null, poster: null },
+  { id: 'myanmar-2',      location: 'yangon',   author: null, title: null, summary: null, body: null, video: null, poster: null },
+  { id: 'sri-lanka',      location: 'colombo',  author: null, title: null, summary: null, body: null, video: null, poster: null }
 ];

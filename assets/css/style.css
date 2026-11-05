@@ -220,6 +220,7 @@ a { color: inherit; }
 }
 .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .tile:nth-child(4n+1), .tile:nth-child(4n+4) { grid-column: span 2; }
+.tile:last-child:nth-child(4n+1) { grid-column: 1 / -1; } /* odd count: last tile fills the row */
 .tile__media {
   position: relative; flex: 1; min-height: 180px; border-radius: var(--r-media); overflow: hidden;
   display: grid; place-items: center; background: var(--surface-2);
@@ -289,7 +290,7 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 .steps { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; counter-reset: s; }
 .steps li { display: flex; gap: 12px; align-items: baseline; }
 .steps li::before { counter-increment: s; content: counter(s); flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--surface); color: var(--ink); font-weight: 700; font-size: .9rem; }
-.team { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-top: 18px; }
+.team { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 18px; }
 .team div { display: grid; justify-items: center; gap: 8px; font-size: .9rem; color: var(--muted); text-align: center; }
 .team span { width: 100%; max-width: 96px; aspect-ratio: 1; border-radius: 50%; background: var(--surface-2); border: 1px dashed var(--line); }
 
