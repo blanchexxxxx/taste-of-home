@@ -131,29 +131,20 @@ a { color: inherit; }
 .hero__sub { max-width: 34ch; margin: 26px 0 32px; font-size: clamp(1.08rem, 1.6vw, 1.3rem); color: var(--muted); line-height: 1.5; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* liquid photo cluster: one big round photo with small ones floating against it in a "goo" layer.
-   Small ones get a multiply tint so they stay dark. Positions come from pages.js. */
-.blobs { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end; }
+/* liquid ball cluster (physics in pages.js): solid-colour droplets in a "goo" layer;
+   only the big ball shows its photo. Click a small ball to make it big; drag to throw. */
+.blobs { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.blobs.is-over { cursor: grab; }
+.blobs.is-dragging { cursor: grabbing; }
 .blobs__defs { position: absolute; }
 .blobs__goo, .blobs__pics { position: absolute; inset: 0; pointer-events: none; }
 .blobs__goo { filter: url(#goo); }
-.blob, .goo {
-  position: absolute; left: var(--x); top: var(--y); width: var(--s); aspect-ratio: 1; border-radius: 50%;
-  animation: float 8s ease-in-out infinite; animation-delay: calc(var(--i) * -2.3s);
-  animation-duration: calc(7s + var(--i) * 1.3s);
-}
-.goo { background: var(--grad); scale: 1.06; filter: brightness(.3); }
-.goo.is-big { scale: 1.035; filter: none; }
-.blob { overflow: hidden; isolation: isolate; background-color: #3c4729; }
-.blob.is-big { background-color: #fbfbf7; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .9); }
-.blob img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: saturate(.7); }
-.blob.is-big img { filter: none; }
-@keyframes float {
-  0%, 100% { translate: 0 0; }
-  25% { translate: calc(var(--a) * .8) calc(var(--a) * -1); }
-  50% { translate: calc(var(--a) * -.4) calc(var(--a) * -.3); }
-  75% { translate: calc(var(--a) * -.9) calc(var(--a) * .7); }
-}
+.ball, .pic { position: absolute; left: 0; top: 0; border-radius: 50%; transform-origin: 50% 50%; will-change: transform; }
+.ball { background: var(--c, var(--lime)); }
+.ball.is-big { background: var(--grad); }
+.pic { overflow: hidden; opacity: 0; transition: opacity .5s var(--ease); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .9); }
+.pic.is-big { opacity: 1; }
+.pic img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
 /* ---------- globe ---------- */
 .globe-block { padding: 24px 0 40px; scroll-margin-top: 72px; }
