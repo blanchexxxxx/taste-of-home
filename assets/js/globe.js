@@ -66,7 +66,7 @@
   function start() {
     if (started) return;
     started = true;
-    loadScript('vendor/globe.gl.min.js').then(init).catch(showFallback);
+    loadScript('vendor/globe.gl.min.js?v=2.46.2').then(init).catch(showFallback);
   }
 
   if ('IntersectionObserver' in window) {
