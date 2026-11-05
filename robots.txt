@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://blanchexxxxx.github.io/taste-of-home/sitemap.xml

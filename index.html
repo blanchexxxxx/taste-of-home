@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Taste of Home | Food stories from international students</title>
+  <meta name="description" content="Taste of Home: home-cooked food stories and short videos from international students from China, Indonesia, Myanmar and Sri Lanka. Spin the 3D globe to explore.">
+  <link rel="canonical" href="https://blanchexxxxx.github.io/taste-of-home/">
+  <meta name="theme-color" content="#f2f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e100e" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Taste of Home">
+  <meta property="og:description" content="Food stories from international students. Spin the globe, pick a country, taste a memory.">
+  <meta property="og:url" content="https://blanchexxxxx.github.io/taste-of-home/">
+  <meta property="og:image" content="https://blanchexxxxx.github.io/taste-of-home/assets/img/globe-1k.jpg">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/outfit-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"Taste of Home","url":"https://blanchexxxxx.github.io/taste-of-home/","description":"Food stories and short videos from international students.","inLanguage":["en","zh","id","my","si","ta"]}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="./" aria-label="Taste of Home"><span class="mark"><span data-icon="bowl-food"></span></span><span class="brand__name">Taste of Home</span></a>
+      <nav class="actions">
+        <a class="pill-btn" href="info.html"><span data-icon="info"></span><span data-i18n="nav.info">Info</span></a>
+        <div class="lang">
+          <button class="pill-btn pill-btn--icon" id="langBtn" type="button" aria-haspopup="listbox" aria-expanded="false" data-i18n-aria="nav.language" aria-label="Language"><span data-icon="globe-simple"></span></button>
+          <ul class="lang__menu" id="langMenu" role="listbox" hidden></ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero__grid">
+        <div>
+          <p class="kicker" data-i18n="hero.kicker">An English class project</p>
+          <h1>Taste of <span class="bubble-word">Home</span></h1>
+          <p class="hero__sub" data-i18n="hero.subtitle">Home-cooked food stories from international students. Spin the globe, pick a country, taste a memory.</p>
+          <div class="hero__cta">
+            <a class="btn btn--grad" href="#globe-block"><span data-icon="globe-simple"></span><span data-i18n="hero.ctaGlobe">Explore the globe</span></a>
+            <a class="btn" href="posts.html"><span data-i18n="hero.ctaPosts">See all posts</span><span data-icon="arrow-right"></span></a>
+          </div>
+        </div>
+        <div class="bubbles" id="bubbles"></div>
+      </div>
+    </section>
+
+    <section class="globe-block" id="globe-block">
+      <div class="wrap">
+        <div class="globe-head reveal">
+          <h2 data-i18n="globe.title">Where our food comes from</h2>
+          <p class="hint"><span data-icon="globe-simple"></span><span data-i18n="globe.hint">Drag to rotate · Click a label to open a story</span></p>
+        </div>
+        <div class="stage" id="globe-section">
+          <div class="globe-skeleton" id="globe-skeleton" role="status"><span></span><b hidden data-i18n="globe.loading">Loading the globe</b></div>
+          <div id="globe"></div>
+          <div class="globe-fallback" id="globe-fallback" hidden>
+            <p data-i18n="globe.fallback">Your browser can't show the 3D globe, so here are the stories as a list:</p>
+            <ul></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap">
+        <div class="band__inner reveal">
+          <h2 data-i18n="posts.subtitle">Six students, six dishes, six short videos.</h2>
+          <a class="btn btn--grad" href="posts.html"><span data-i18n="hero.ctaPosts">See all posts</span><span data-icon="arrow-right"></span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span data-i18n="footer.text">Made by international students for our English class.</span>
+      <nav><a href="./" data-i18n="nav.home">Home</a><a href="posts.html" data-i18n="posts.title">All food stories</a><a href="info.html" data-i18n="nav.info">Info</a></nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/common.js" defer></script>
+  <script src="assets/js/pages.js" defer></script>
+  <script src="assets/js/globe.js" defer></script>
+</body>
+</html>
