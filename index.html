@@ -45,14 +45,12 @@
             <a class="btn" href="posts.html"><span data-i18n="hero.ctaPosts">See all posts</span><span data-icon="arrow-right"></span></a>
           </div>
         </div>
-        <div class="slides" id="slides" aria-roledescription="carousel">
-          <div class="slides__bar">
-            <div class="slides__dots" id="slidesDots"></div>
-            <div class="slides__nav">
-              <button type="button" id="slidesPrev" aria-label="Previous photo"><span data-icon="arrow-left"></span></button>
-              <button type="button" id="slidesNext" aria-label="Next photo"><span data-icon="arrow-right"></span></button>
-            </div>
-          </div>
+        <div class="blobs" id="blobs">
+          <div class="blobs__goo" aria-hidden="true"></div>
+          <div class="blobs__pics"></div>
+          <svg class="blobs__defs" width="0" height="0" aria-hidden="true" focusable="false">
+            <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"/></filter>
+          </svg>
         </div>
       </div>
     </section>

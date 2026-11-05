@@ -32,7 +32,7 @@ window.POSTS = [
   { id: 'sri-lanka',      location: 'colombo',  author: null, title: null, summary: null, body: null, video: null, poster: null }
 ];
 
-/* Home page slideshow. Placeholder photos from Wikimedia Commons (free licenses, credited on the Info page).
+/* Home page round "liquid" photos (first 5 are used; square images work best). Placeholder photos from Wikimedia Commons (free licenses, credited on the Info page).
    Replace with your own photos any time: put the file in assets/img/hero/ and edit this list. */
 window.HERO_PHOTOS = [
   { src: 'assets/img/hero/wok.jpg',        alt: 'Cooking with a wok',                 credit: 'Mx. Granger, CC0',                         url: 'https://commons.wikimedia.org/wiki/File:Cooking_with_a_wok_on_an_outdoor_stove_5.jpg' },

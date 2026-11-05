@@ -5,39 +5,37 @@
 
   function locOf(p) { return p.location ? window.LOCATIONS[p.location] : null; }
 
-  /* ---------- home: photo slideshow ---------- */
-  var slides = document.getElementById('slides');
-  if (slides && window.HERO_PHOTOS && window.HERO_PHOTOS.length) {
-    var photos = window.HERO_PHOTOS, cur = 0, timer = null;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var dots = document.getElementById('slidesDots');
-    var imgs = photos.map(function (ph, i) {
-      var im = document.createElement('img');
-      im.className = 'slides__img' + (i === 0 ? ' is-on' : '');
-      im.alt = ph.alt; im.decoding = 'async';
-      if (i === 0) { im.src = ph.src; im.fetchPriority = 'high'; } else { im.dataset.src = ph.src; }
-      slides.insertBefore(im, slides.querySelector('.slides__bar'));
-      return im;
-    });
-    // load the rest after the page is idle
-    window.addEventListener('load', function () {
-      setTimeout(function () { imgs.forEach(function (im) { if (im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); } }); }, 600);
-    });
-    dots.innerHTML = photos.map(function (ph, i) { return '<button type="button" aria-label="' + esc(ph.alt) + '"' + (i === 0 ? ' aria-current="true"' : '') + '></button>'; }).join('');
-    function go(n) {
-      imgs[cur].classList.remove('is-on'); dots.children[cur].removeAttribute('aria-current');
-      cur = (n + imgs.length) % imgs.length;
-      var im = imgs[cur]; if (im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); }
-      im.classList.add('is-on'); dots.children[cur].setAttribute('aria-current', 'true');
+  /* ---------- home: liquid photo cluster ---------- */
+  var blobs = document.getElementById('blobs');
+  if (blobs && window.HERO_PHOTOS) {
+    var photos = window.HERO_PHOTOS.slice(0, 5);
+    var pics = blobs.querySelector('.blobs__pics'), goo = blobs.querySelector('.blobs__goo');
+    goo.innerHTML = photos.map(function () { return '<span class="goo"></span>'; }).join('');
+    pics.innerHTML = photos.map(function (ph, i) {
+      return '<button type="button" class="blob" data-i="' + i + '" aria-label="' + esc(ph.alt) + '">' +
+        '<img src="' + esc(ph.src) + '" alt="' + esc(ph.alt) + '" decoding="async"' + (i > 1 ? ' loading="lazy"' : '') + '></button>';
+    }).join('');
+    var cap = document.createElement('span');
+    cap.className = 'blobs__cap';
+    blobs.appendChild(cap);
+    function activate(i) {
+      if (i == null) { blobs.removeAttribute('data-active'); return; }
+      blobs.setAttribute('data-active', i);
+      cap.textContent = photos[i].alt;
     }
-    function play() { if (!reduce) { clearInterval(timer); timer = setInterval(function () { go(cur + 1); }, 5000); } }
-    function stop() { clearInterval(timer); }
-    document.getElementById('slidesPrev').addEventListener('click', function () { go(cur - 1); play(); });
-    document.getElementById('slidesNext').addEventListener('click', function () { go(cur + 1); play(); });
-    dots.addEventListener('click', function (e) { var i = Array.prototype.indexOf.call(dots.children, e.target); if (i > -1) { go(i); play(); } });
-    slides.addEventListener('mouseenter', stop); slides.addEventListener('mouseleave', play);
-    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else play(); });
-    play();
+    pics.addEventListener('pointerover', function (e) {
+      var b = e.target.closest('.blob');
+      if (b && e.pointerType === 'mouse') activate(b.getAttribute('data-i'));
+    });
+    pics.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') activate(null); });
+    // touch / keyboard: tap or focus toggles
+    pics.addEventListener('click', function (e) {
+      var b = e.target.closest('.blob'); if (!b) return;
+      var i = b.getAttribute('data-i');
+      activate(blobs.getAttribute('data-active') === i && !matchMedia('(hover: hover)').matches ? null : i);
+    });
+    pics.addEventListener('focusin', function (e) { var b = e.target.closest('.blob'); if (b) activate(b.getAttribute('data-i')); });
+    pics.addEventListener('focusout', function () { activate(null); });
   }
 
   /* ---------- info: photo credits ---------- */
