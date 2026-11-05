@@ -131,41 +131,29 @@ a { color: inherit; }
 .hero__sub { max-width: 34ch; margin: 26px 0 32px; font-size: clamp(1.08rem, 1.6vw, 1.3rem); color: var(--muted); line-height: 1.5; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* liquid photo cluster: one big round photo with small ones packed against it (positions set by JS).
-   Hovering a small one makes it flow into the big slot. Small ones get a multiply tint. */
+/* liquid photo cluster: one big round photo with small ones floating against it in a "goo" layer.
+   Small ones get a multiply tint so they stay dark. Positions come from pages.js. */
 .blobs { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end; }
 .blobs__defs { position: absolute; }
-.blobs__goo, .blobs__pics { position: absolute; inset: 0; }
+.blobs__goo, .blobs__pics { position: absolute; inset: 0; pointer-events: none; }
 .blobs__goo { filter: url(#goo); }
 .blob, .goo {
-  position: absolute; left: 0; top: 0; width: 70%; aspect-ratio: 1; border-radius: 50%;
-  transform-origin: 50% 50%;
-  transition: transform .95s cubic-bezier(.34, 1.4, .5, 1), filter .5s var(--ease), background-color .6s var(--ease);
-  will-change: transform;
+  position: absolute; left: var(--x); top: var(--y); width: var(--s); aspect-ratio: 1; border-radius: 50%;
+  animation: float 8s ease-in-out infinite; animation-delay: calc(var(--i) * -2.3s);
+  animation-duration: calc(7s + var(--i) * 1.3s);
 }
-.goo { background: var(--grad); filter: brightness(.3); }
-.goo.is-big { filter: none; }
-.blob {
-  padding: 0; border: 0; overflow: hidden; isolation: isolate; cursor: pointer;
-  background-color: #3c4729;                       /* multiply tint for the small ones */
-  animation: morph 7s ease-in-out infinite; animation-delay: calc(var(--i) * -1.4s);
-}
-.blob.is-big { background-color: #fbfbf7; cursor: default; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .9); z-index: 2; }
-.blob img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: saturate(.7); transition: filter .6s var(--ease); }
+.goo { background: var(--grad); scale: 1.06; filter: brightness(.3); }
+.goo.is-big { scale: 1.035; filter: none; }
+.blob { overflow: hidden; isolation: isolate; background-color: #3c4729; }
+.blob.is-big { background-color: #fbfbf7; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .9); }
+.blob img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: saturate(.7); }
 .blob.is-big img { filter: none; }
-.blob:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
-@keyframes morph {
-  0%, 100% { border-radius: 51% 49% 50% 50% / 50% 51% 49% 50%; }
-  33% { border-radius: 47% 53% 46% 54% / 53% 47% 53% 47%; }
-  66% { border-radius: 53% 47% 51% 49% / 47% 53% 48% 52%; }
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  25% { translate: calc(var(--a) * .8) calc(var(--a) * -1); }
+  50% { translate: calc(var(--a) * -.4) calc(var(--a) * -.3); }
+  75% { translate: calc(var(--a) * -.9) calc(var(--a) * .7); }
 }
-.blobs__cap {
-  position: absolute; left: 44%; top: 86%; translate: -50% 0; z-index: 3; white-space: nowrap;
-  padding: 8px 16px; border-radius: 999px; background: rgba(23, 27, 22, .82); border: 1px solid rgba(238, 241, 232, .16);
-  font-size: .9rem; color: var(--ink); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  pointer-events: none; transition: opacity .3s var(--ease);
-}
-.blobs__cap.is-fading { opacity: 0; }
 
 /* ---------- globe ---------- */
 .globe-block { padding: 24px 0 40px; scroll-margin-top: 72px; }

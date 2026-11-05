@@ -5,67 +5,23 @@
 
   function locOf(p) { return p.location ? window.LOCATIONS[p.location] : null; }
 
-  /* ---------- home: liquid photo cluster ---------- */
+  /* ---------- home: liquid photo cluster (static composition, no hover) ---------- */
   var blobs = document.getElementById('blobs');
   if (blobs && window.HERO_PHOTOS) {
     var photos = window.HERO_PHOTOS.slice(0, 5);
-    var BIG = 70;                                    // big circle diameter, % of the box (matches CSS width)
-    var CX = 48, CY = 46, GAP = 1;                   // big circle centre; small gap so the liquid bridges them
-    // small circles hug the big one: [angle in degrees (0 = right, 90 = down), diameter %]
-    var RING = [[-48, 16], [8, 12], [62, 15], [148, 13]];
-    var SLOTS = [[CX, CY, BIG]].concat(RING.map(function (r) {
-      var d = BIG / 2 + r[1] / 2 + GAP, a = r[0] * Math.PI / 180;
-      return [CX + Math.cos(a) * d, CY + Math.sin(a) * d, r[1]];
-    }));
+    // [centerX%, centerY%, diameter%, drift amplitude px]; first = big one, others float against it in loose pairs
+    var LAYOUT = [[46, 47, 62, 4], [80.3, 23.8, 16, 9], [83.8, 37.2, 10, 11], [40.6, 85.2, 14, 8], [26.9, 79.1, 11, 10]];
     var pics = blobs.querySelector('.blobs__pics'), gooBox = blobs.querySelector('.blobs__goo');
-    gooBox.innerHTML = photos.map(function () { return '<span class="goo"></span>'; }).join('');
-    pics.innerHTML = photos.map(function (ph, i) {
-      return '<button type="button" class="blob" style="--i:' + i + '" data-i="' + i + '" aria-label="' + esc(ph.alt) + '">' +
-        '<img src="' + esc(ph.src) + '" alt="" decoding="async"></button>';
+    function vars(L, i) {
+      return '--x:' + (L[0] - L[2] / 2) + '%;--y:' + (L[1] - L[2] / 2) + '%;--s:' + L[2] + '%;--a:' + L[3] + 'px;--i:' + i;
+    }
+    gooBox.innerHTML = photos.map(function (_, i) {
+      return '<span class="goo' + (i === 0 ? ' is-big' : '') + '" style="' + vars(LAYOUT[i], i) + '"></span>';
     }).join('');
-    var els = pics.querySelectorAll('.blob'), goos = gooBox.querySelectorAll('.goo');
-    var cap = document.createElement('span'); cap.className = 'blobs__cap'; blobs.appendChild(cap);
-    var slotOf = photos.map(function (_, i) { return i; });   // photo i sits in slot slotOf[i]
-    var big = 0, locked = null;
-
-    function place() {
-      var W = blobs.clientWidth, size = W * BIG / 100;
-      for (var i = 0; i < els.length; i++) {
-        var sl = SLOTS[slotOf[i]], sc = sl[2] / BIG;
-        var tx = sl[0] / 100 * W - size / 2, ty = sl[1] / 100 * W - size / 2;
-        els[i].style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + sc + ')';
-        goos[i].style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + (sc + 0.035) + ')';
-        var isBig = slotOf[i] === 0;
-        els[i].classList.toggle('is-big', isBig); goos[i].classList.toggle('is-big', isBig);
-        els[i].tabIndex = 0;
-      }
-    }
-    function caption() {
-      cap.classList.add('is-fading');
-      setTimeout(function () { cap.textContent = photos[big].alt; cap.classList.remove('is-fading'); }, 250);
-    }
-    function makeBig(i) {
-      if (i === big) return;
-      var s = slotOf[i]; slotOf[big] = s; slotOf[i] = 0;
-      locked = els[big];            // the old big one lands under the cursor: ignore it until the pointer leaves it
-      big = i; place(); caption();
-    }
-    cap.textContent = photos[0].alt;
-    place();
-    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(place, 120); });
-
-    pics.addEventListener('pointerover', function (e) {
-      if (e.pointerType !== 'mouse') return;
-      var b = e.target.closest('.blob'); if (!b || b === locked) return;
-      makeBig(+b.getAttribute('data-i'));
-    });
-    pics.addEventListener('pointerout', function (e) {
-      if (locked && e.target.closest('.blob') === locked && !locked.contains(e.relatedTarget)) locked = null;
-    });
-    pics.addEventListener('click', function (e) { var b = e.target.closest('.blob'); if (b) makeBig(+b.getAttribute('data-i')); });
-    pics.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { var b = e.target.closest('.blob'); if (b) { e.preventDefault(); makeBig(+b.getAttribute('data-i')); } }
-    });
+    pics.innerHTML = photos.map(function (ph, i) {
+      return '<span class="blob' + (i === 0 ? ' is-big' : '') + '" style="' + vars(LAYOUT[i], i) + '">' +
+        '<img src="' + esc(ph.src) + '" alt="' + esc(ph.alt) + '" decoding="async"></span>';
+    }).join('');
   }
 
   /* ---------- info: photo credits ---------- */
