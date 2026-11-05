@@ -20,7 +20,7 @@ Everything you need to edit is in **`assets/js/data.js`**:
 
 - Put video files in `assets/videos/` (compress to under ~50 MB each), images in `assets/img/`.
 - To add a new city to the globe, add it to `LOCATIONS` in the same file (latitude / longitude).
-- UI translations live in `assets/js/i18n.js` (English, 中文, Bahasa Indonesia, မြန်မာ, සිංහල, தமிழ்).
+- UI translations live in `assets/js/i18n.js` (English, 中文, 日本語, Bahasa Indonesia, မြန်မာ, සිංහල, தமிழ்).
 
 Commit and push to `main`; GitHub Pages updates the site in about a minute.
 

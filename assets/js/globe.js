@@ -183,6 +183,13 @@
     document.addEventListener('visibilitychange', syncRun);
 
     globe.onGlobeReady(function () {
+      // Light, even look: let the texture light itself so the night side doesn't turn grey.
+      if (mat && mat.map && mat.emissive) {
+        mat.emissiveMap = mat.map;
+        mat.emissive.set('#ffffff');
+        mat.emissiveIntensity = 0.3;
+        mat.needsUpdate = true;
+      }
       if (status) status.hidden = true;
       holder.classList.add('is-ready');
     });

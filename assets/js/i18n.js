@@ -1,9 +1,10 @@
-/* UI translations. Languages: English + the standard languages of the
+/* UI translations. Languages: English, Japanese + the standard languages of the
    students' countries (China, Indonesia, Myanmar, Sri Lanka).
    To fix a translation, just edit the string here. */
 window.LANGS = [
   { code: 'en', name: 'English' },
   { code: 'zh', name: '简体中文' },
+  { code: 'ja', name: '日本語' },
   { code: 'id', name: 'Bahasa Indonesia' },
   { code: 'my', name: 'မြန်မာ' },
   { code: 'si', name: 'සිංහල' },
@@ -105,6 +106,54 @@ window.I18N = {
     'footer.text': '由留学生们为英语课用心制作。',
     'country.china': '中国', 'country.indonesia': '印度尼西亚', 'country.myanmar': '缅甸', 'country.srilanka': '斯里兰卡',
     'city.shenzhen': '深圳', 'city.jakarta': '雅加达', 'city.yangon': '仰光', 'city.colombo': '科伦坡'
+  },
+
+  ja: {
+    'nav.info': '概要',
+    'nav.language': '言語',
+    'nav.home': 'ホーム',
+    'hero.kicker': '英語の授業プロジェクト',
+    'hero.subtitle': '留学生たちのふるさとの家庭料理ストーリー。地球を回して、国を選んで、思い出の味をどうぞ。',
+    'hero.ctaGlobe': '地球を探検する',
+    'hero.ctaPosts': 'すべての投稿を見る',
+    'globe.title': '私たちの料理はどこから来たのか',
+    'globe.hint': 'ドラッグで回転 · ラベルをクリックでストーリーを開く',
+    'globe.loading': '地球を読み込み中…',
+    'globe.fallback': 'お使いのブラウザでは3D地球を表示できません。ストーリーの一覧はこちらです：',
+    'posts.title': 'すべてのフードストーリー',
+    'posts.subtitle': '6人の学生、6つの料理、6本のショート動画。',
+    'posts.tba': '場所は近日公開',
+    'posts.read': '投稿を読む',
+    'post.by': '作成者',
+    'post.videoSoon': '動画は近日公開',
+    'post.titleSoon': '料理名は近日公開',
+    'post.summarySoon': 'この料理の短い紹介がここに表示されます。',
+    'post.bodySoon': 'この学生はまだ投稿を書いています。料理にまつわるストーリーを読みに、また来てくださいね！',
+    'post.story': 'ストーリー',
+    'post.back': 'すべての投稿',
+    'post.notFound': '申し訳ありません。その投稿は見つかりませんでした。',
+    'post.prev': '前へ',
+    'post.next': '次へ',
+    'post.student': '学生',
+    'modal.detail': '詳細',
+    'modal.close': '閉じる',
+    'info.title': 'このプロジェクトについて',
+    'info.lead': 'Taste of Home は、留学生が英語の授業のために作ったウェブサイトです。',
+    'info.aboutH': 'これは何？',
+    'info.aboutP': '私たちは一人ひとり、母国の料理についてショート動画を撮り、投稿を書きました。料理は自分のふるさとを伝えるいちばん簡単な方法なので、みんなのストーリーをひとつの地球の上に集めました。',
+    'info.howH': 'サイトの使い方',
+    'info.how1': 'ホームページで地球をドラッグして回します。',
+    'info.how2': '国のラベルをクリックしてプレビューを見ます。',
+    'info.how3': '「詳細」を押すと投稿の全文が読めます。',
+    'info.teamH': '私たちのチーム',
+    'info.teamP': '名前と写真は近日公開。',
+    'info.creditsH': 'クレジット',
+    'info.creditsP': '3D地球：globe.gl（MITライセンス）。地図データ：Natural Earth（パブリックドメイン）。',
+    'info.contactH': 'お問い合わせ',
+    'info.contactP': '連絡先は近日公開。',
+    'footer.text': '英語の授業のために、留学生たちが心を込めて作りました。',
+    'country.china': '中国', 'country.indonesia': 'インドネシア', 'country.myanmar': 'ミャンマー', 'country.srilanka': 'スリランカ',
+    'city.shenzhen': '深圳', 'city.jakarta': 'ジャカルタ', 'city.yangon': 'ヤンゴン', 'city.colombo': 'コロンボ'
   },
 
   id: {
