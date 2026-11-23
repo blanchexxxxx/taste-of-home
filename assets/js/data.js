@@ -7,6 +7,7 @@
    - body: a list of paragraphs, e.g. ['First paragraph', 'Second'].
    - keywords: a list of { word: '...', meaning: '...' } (optional).
    - ingredients: a list of strings; steps: a list of strings (numbered for you).
+     Either can be split into groups: [{ title: 'Sambal', items: ['...', '...'] }, ...].
      Leave either as null to show "coming soon". These only appear once body is filled in.
    - role: 'teacher' shows "Our teacher" instead of "Student" when author is empty.
    - video:
@@ -46,8 +47,30 @@ window.POSTS = [
       { word: 'pestle', meaning: '乳棒' },
       { word: 'struggling', meaning: 'having trouble' }
     ],
-    ingredients: null,
-    steps: null,
+    ingredients: [
+      { title: 'Fried Chicken', items: ['Chicken (Preferably Dark Meat)', 'Flour', 'Oil'] },
+      { title: 'Sambal', items: ['Bird’s Eye Chili', 'MSG', 'Garlic', 'Bouillon', 'Salt to taste', 'Sugar', 'Lime (Optional)', 'Shrimp Paste (Optional)', 'Oil after frying fried chicken'] }
+    ],
+    steps: [
+      { title: 'Fried Chicken', items: [
+        'Add salt and pepper to flour',
+        'Separate half of the flour and add water to make a wet batter',
+        'Coat the chicken in dry flour',
+        'Dip it in wet batter',
+        'Fry the chicken for 5-7 minutes'
+      ] },
+      { title: 'Sambal', items: [
+        'Crush the chillies and garlic in the Mortar & Pestle',
+        'Add salt and sugar to taste',
+        'Add MSG and Bouillon',
+        'Add Lime for a fresher taste',
+        'Add Shrimp Paste for extra flavour',
+        'Pour the oil after frying the chicken into the sambal to bring out the aroma and flavour of the sambal'
+      ] },
+      { title: 'Final part', items: [
+        'Put the sambal on top of the chicken and crush it with the pestle'
+      ] }
+    ],
     video: null, poster: null
   },
   {

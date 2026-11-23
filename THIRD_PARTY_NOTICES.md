@@ -8,6 +8,7 @@ The site's own code is MIT-licensed (see [LICENSE](LICENSE)). The following part
 |---|---|---|---|
 | globe.gl 2.46.2 (includes three.js) | `vendor/globe.gl.min.js` | https://github.com/vasturiano/globe.gl | MIT, see `vendor/globe.gl.LICENSE` |
 | Phosphor Icons 2.1.1 (regular weight, inlined as SVG strings) | `assets/js/icons.js` | https://phosphoricons.com | MIT, see `assets/js/phosphor.LICENSE` |
+| flag-icons 7.2.3 (4x3 SVG flags, post page backgrounds) | `assets/img/flags/` | https://github.com/lipis/flag-icons | MIT, see `assets/img/flags/LICENSE` |
 | Outfit typeface (variable, Latin subsets via Fontsource) | `assets/fonts/` | https://github.com/Outfitio/Outfit-Fonts | SIL Open Font License 1.1, see `assets/fonts/OFL.txt` |
 
 ## Map data

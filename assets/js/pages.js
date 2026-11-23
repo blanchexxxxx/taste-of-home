@@ -201,6 +201,11 @@
     function list(tag, items) {
       items = T.pick(items);
       if (!items || !items.length) return '<p class="placeholder">' + esc(t('post.recipeSoon')) + '</p>';
+      if (items[0] && items[0].items) {   // grouped: [{ title: 'Sambal', items: [...] }, ...]
+        return items.map(function (g) {
+          return (g.title ? '<h3>' + esc(T.pick(g.title)) + '</h3>' : '') + list(tag, g.items);
+        }).join('');
+      }
       return '<' + tag + '>' + items.map(function (x) { return '<li>' + esc(T.pick(x)) + '</li>'; }).join('') + '</' + tag + '>';
     }
     var kw = T.pick(p.keywords);
@@ -221,6 +226,14 @@
       return;
     }
     var p = window.POSTS[idx];
+    var loc = locOf(p);
+    if (loc && loc.code) {
+      // Dimmed, faded country flag behind the top of the page (assets/img/flags/<code>.svg).
+      var flag = document.querySelector('.flag-bg') || document.body.insertBefore(document.createElement('div'), document.body.firstChild);
+      flag.className = 'flag-bg'; flag.setAttribute('aria-hidden', 'true');
+      // absolute URL: a url() inside a custom property would otherwise resolve against style.css
+      flag.style.setProperty('--flag', 'url("' + new URL('assets/img/flags/' + loc.code.toLowerCase() + '.svg', location.href).href + '")');
+    }
     var title = T.postTitle(p);
     var summary = T.pick(p.summary);
     var body = T.pick(p.body);

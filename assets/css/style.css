@@ -263,6 +263,23 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 .modal__foot { display: flex; justify-content: flex-end; padding: 8px 4px 4px; }
 
 /* ---------- post page ---------- */
+/* Country flag behind the top of the page: softened, darkened, tinted toward the lime/yellow
+   accent, and faded into --bg so it reads as a gradient rather than a picture. */
+.flag-bg { position: absolute; inset: 0 0 auto 0; height: min(680px, 92vh); overflow: hidden; pointer-events: none; z-index: 0; }
+.flag-bg::before {
+  content: ""; position: absolute; inset: -24px;
+  background: var(--flag) left top / cover no-repeat;
+  filter: blur(6px) saturate(.55) brightness(.4);
+}
+.flag-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(14, 16, 14, .55) 50%, var(--bg) 96%),
+    linear-gradient(115deg, rgba(156, 242, 58, .10), rgba(248, 232, 63, .06)),
+    linear-gradient(90deg, rgba(14, 16, 14, .55) 0%, rgba(14, 16, 14, .2) 70%);
+}
+.flag-bg ~ main { position: relative; z-index: 1; }
+@media (max-width: 720px) { .flag-bg { height: 480px; } }
 .post { max-width: 860px; }
 .post h1 { margin: 16px 0 8px; font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 700; }
 .post .video { margin: 30px 0 40px; border-radius: var(--r-bubble); }
@@ -273,6 +290,8 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 .post__list ul, .post__list ol { margin: 0; padding-left: 1.4em; max-width: 65ch; font-size: 1.1rem; }
 .post__list li { margin: 6px 0; padding-left: 4px; }
 .post__list li::marker { color: var(--muted); }
+.post__list h3 { margin: 22px 0 6px; font-size: 1.1rem; font-weight: 600; color: var(--lime); letter-spacing: -.01em; }
+.post__list h2 + h3 { margin-top: 4px; }
 .post__keywords dl { margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .post__keywords dl > div { padding: 10px 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); max-width: 100%; }
 .post__keywords dt { font-weight: 600; }
