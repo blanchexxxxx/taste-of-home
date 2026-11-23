@@ -131,14 +131,39 @@ a { color: inherit; }
 .hero__sub { max-width: 34ch; margin: 26px 0 32px; font-size: clamp(1.08rem, 1.6vw, 1.3rem); color: var(--muted); line-height: 1.5; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* photo slideshow (pages.js, drawn on a canvas): the photo sits in an irregular shape and breaks
-   up into halftone dots towards the edge; the further out, the wider apart, smaller and fainter. */
-.show { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end; }
-.show__canvas { position: absolute; inset: -20%; width: 140%; height: 140%; max-width: none; pointer-events: none; }
-.show__dots { position: absolute; left: 0; right: 0; bottom: -13%; display: flex; justify-content: center; gap: 4px; }
-.show__dot { width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
-.show__dot::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: rgba(238, 241, 232, .3); transition: width .4s var(--ease), background .4s; }
-.show__dot.is-on::before { width: 22px; background: var(--grad); }
+/* photo slideshow (pages.js): a portrait photo card on a fixed, offset accent block. Photos
+   cross-fade with a slow zoom; segmented progress bar + counter at the bottom. */
+.show { position: relative; width: 94%; max-width: 480px; aspect-ratio: 4 / 5; justify-self: end; margin: 0 6% 6% 0; }
+.show::before {   /* accent block behind the card: never moves */
+  content: ""; position: absolute; inset: 7% -5% -5% 9%; border-radius: var(--r-bubble);
+  background: var(--grad); opacity: .9;
+}
+.show__card {
+  position: absolute; inset: 0; overflow: hidden; border-radius: var(--r-bubble);
+  background: var(--surface); box-shadow: var(--shadow); isolation: isolate;
+}
+.show__slides img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; scale: 1.08; transition: opacity .8s var(--ease), scale 0s 0.8s;
+}
+.show__slides img.is-on { opacity: 1; scale: 1; transition: opacity .8s var(--ease), scale 2.8s linear; }
+.show__card::after {   /* soft shade under the bar so it reads on light photos */
+  content: ""; position: absolute; inset: auto 0 0 0; height: 34%; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(14, 16, 14, .72));
+}
+.show__bar { position: absolute; left: 20px; right: 20px; bottom: 16px; z-index: 2; display: flex; align-items: center; gap: 14px; }
+.show__count { flex: none; color: rgba(238, 241, 232, .7); font-size: .85rem; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.show__count b { color: var(--ink); font-weight: 650; }
+.show__dots { flex: 1; display: flex; gap: 6px; }
+.show__dot { flex: 1; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; }
+.show__dot span { position: relative; display: block; width: 100%; height: 3px; border-radius: 999px; background: rgba(238, 241, 232, .28); overflow: hidden; }
+.show__dot span::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--grad); transform: scaleX(0); transform-origin: left; }
+.show__dot.is-done span::after { transform: scaleX(1); }
+.show__dot.is-on span::after { animation: show-fill var(--dur, 2s) linear forwards; }
+@keyframes show-fill { to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .show__slides img, .show__slides img.is-on { scale: 1; transition: opacity .3s linear; }
+}
 
 /* ---------- globe ---------- */
 .globe-block { padding: 24px 0 40px; scroll-margin-top: 72px; }
@@ -335,7 +360,7 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .hero__grid { grid-template-columns: 1fr; }
-  .show { justify-self: center; max-width: 440px; }
+  .show { justify-self: center; max-width: 400px; }
   .info-grid { grid-template-columns: 1fr; }
   .team { grid-template-columns: repeat(3, 1fr); }
 }
