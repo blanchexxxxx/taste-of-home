@@ -6,19 +6,103 @@
   function locOf(p) { return p.location ? window.LOCATIONS[p.location] : null; }
 
   /* ---------- home: photo slideshow ----------
-     One big photo in a soft, irregular shape with a drifting gradient glow around it.
-     Moves on to the next photo every 2 seconds; the dots jump to a photo. */
+     Drawn on a canvas: the photo sits in an irregular shape and breaks up into halftone dots
+     (coloured from the photo itself) towards the edge. The further out, the wider apart, smaller
+     and fainter the dots. Moves on every 2 seconds: the shape morphs and the photos cross-fade. */
   var show = document.getElementById('show');
   if (show && window.HERO_PHOTOS && window.HERO_PHOTOS.length) {
-    var INTERVAL = 2000;
-    var frame = show.querySelector('.show__frame'), dotsBox = show.querySelector('.show__dots');
-    var photos = window.HERO_PHOTOS, cur = 0, turns = 0, timer = null;
+    var INTERVAL = 2000, FADE = 900;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cv = show.querySelector('.show__canvas'), g = cv.getContext('2d');
+    var dotsBox = show.querySelector('.show__dots');
+    var photos = window.HERO_PHOTOS, cur = 0, prev = -1, fadeStart = 0, timer = null, raf = 0;
+    var S = 0, W = 0, dpr = 1;
+
+    // Each photo gets its own outline: a circle wobbled by a few smooth sine waves.
+    function shapeFor(i) {
+      var r = function (k) { var x = Math.sin((i + 1) * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); };
+      return { base: 0.40, w: [2, 3, 5].map(function (f, k) { return { f: f, a: 0.035 + 0.04 * r(k), p: r(k + 7) * 6.283 }; }) };
+    }
+    function radius(sh, th) {   // outline radius at angle th, as a fraction of S
+      var v = sh.base;
+      sh.w.forEach(function (w) { v += w.a * Math.sin(w.f * th + w.p) * sh.base; });
+      return v;
+    }
+    function mix(a, b, p) {     // morph between two outlines
+      return { base: a.base + (b.base - a.base) * p, w: a.w.map(function (w, k) {
+        return { f: w.f, a: w.a * (1 - p), p: w.p }; }).concat(b.w.map(function (w) { return { f: w.f, a: w.a * p, p: w.p }; })) };
+    }
+
     var slides = photos.map(function (ph, i) {
-      var img = document.createElement('img');
-      img.src = ph.src; img.alt = ph.alt || ''; img.decoding = 'async'; img.className = 'show__img';
-      frame.appendChild(img);
-      return img;
+      var sl = { img: new Image(), ready: false, data: null, size: 0, shape: shapeFor(i) };
+      sl.img.decoding = 'async';
+      sl.img.onload = function () { sl.ready = true; sl.data = null; if (i === cur) draw(); };
+      sl.img.src = ph.src;
+      return sl;
     });
+    // Pixels of a photo scaled to cover the whole canvas, so dots outside the shape can pick colours.
+    function pixels(sl) {
+      if (sl.data && sl.size === Math.round(W)) return sl.data;
+      var n = Math.round(W), off = document.createElement('canvas'); off.width = n; off.height = n;
+      var o = off.getContext('2d'), iw = sl.img.naturalWidth, ih = sl.img.naturalHeight, k = Math.max(n / iw, n / ih);
+      o.drawImage(sl.img, (n - iw * k) / 2, (n - ih * k) / 2, iw * k, ih * k);
+      sl.canvas = off; sl.size = n;
+      try { sl.data = o.getImageData(0, 0, n, n).data; } catch (e) { sl.data = null; }
+      return sl.data;
+    }
+
+    function layer(sl, sh, alpha) {
+      if (!sl.ready) return;
+      var data = pixels(sl), n = sl.size, c = W / 2, STEPS = 160, th, r;
+      // the photo inside the outline
+      g.save(); g.globalAlpha = alpha; g.beginPath();
+      for (var i = 0; i <= STEPS; i++) {
+        th = i / STEPS * 2 * Math.PI; r = radius(sh, th) * S;
+        g[i ? 'lineTo' : 'moveTo'](c + r * Math.cos(th), c + r * Math.sin(th));
+      }
+      g.closePath(); g.clip(); g.drawImage(sl.canvas, 0, 0, W, W); g.restore();
+      if (!data) return;
+      // halftone rings following the outline, spreading out with distance
+      var d = S * 0.004, ring = 0, maxD = S * 0.24;
+      while (d < maxD) {
+        var t = d / maxD, gap = S * (0.0135 + 0.05 * Math.pow(t, 1.25));
+        var dot = gap * 0.5 * (1 - 0.7 * t), a = alpha * Math.pow(1 - t, 1.4);
+        var count = Math.floor(2 * Math.PI * (S * 0.4 + d) / gap), ph = ring * 0.5;
+        for (var j = 0; j < count; j++) {
+          var h = Math.sin(ring * 127.1 + j * 311.7) * 43758.5453; h -= Math.floor(h);   // stable per-dot random
+          if (h < t * 0.75) continue;                                                       // fewer dots further out
+          th = ph + (j + (h - 0.5) * t) / count * 2 * Math.PI; r = radius(sh, th) * S + d + (h - 0.5) * gap * t;
+          var x = c + r * Math.cos(th), y = c + r * Math.sin(th);
+          var px = Math.min(n - 1, Math.max(0, Math.round(x / W * n))), py = Math.min(n - 1, Math.max(0, Math.round(y / W * n)));
+          var q = (py * n + px) * 4;
+          g.fillStyle = 'rgba(' + data[q] + ',' + data[q + 1] + ',' + data[q + 2] + ',' + a.toFixed(3) + ')';
+          g.beginPath(); g.arc(x, y, dot, 0, 2 * Math.PI); g.fill();
+        }
+        d += gap; ring++;
+      }
+    }
+
+    function draw(now) {
+      raf = 0;
+      if (!S) return;
+      g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, W);
+      var p = prev < 0 || reduce ? 1 : Math.min(1, ((now || performance.now()) - fadeStart) / FADE);
+      var e = 1 - Math.pow(1 - p, 3);   // ease-out
+      if (p < 1) {
+        var sh = mix(slides[prev].shape, slides[cur].shape, e);
+        layer(slides[prev], sh, 1 - e);
+        layer(slides[cur], sh, e);
+        raf = requestAnimationFrame(draw);
+      } else {
+        layer(slides[cur], slides[cur].shape, 1);
+      }
+    }
+    function resize() {
+      S = show.clientWidth; W = S * 1.4; dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(W * dpr);
+      draw();
+    }
+
     var dots = photos.map(function (ph, i) {
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'show__dot'; b.setAttribute('aria-label', ph.alt || String(i + 1));
@@ -27,45 +111,19 @@
       return b;
     });
     function go(i) {
-      cur = (i + photos.length) % photos.length;
-      slides.forEach(function (s, k) { s.classList.toggle('is-on', k === cur); s.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); });
+      i = (i + photos.length) % photos.length;
+      if (i !== cur) { prev = cur; cur = i; fadeStart = performance.now(); }
       dots.forEach(function (d, k) { d.classList.toggle('is-on', k === cur); d.setAttribute('aria-current', k === cur ? 'true' : 'false'); });
-      show.style.setProperty('--turn', (turns++ * 72) + 'deg');   // the blob and glow swing round with each photo (always forwards)
+      cv.setAttribute('aria-label', photos[cur].alt || '');
+      if (!raf) raf = requestAnimationFrame(draw);
     }
     function restart() {
       clearInterval(timer);
       if (photos.length > 1 && !document.hidden) timer = setInterval(function () { go(cur + 1); }, INTERVAL);
     }
     document.addEventListener('visibilitychange', restart);   // no switching in a background tab
-
-    // Halftone dots around the photo: rings of dots whose spacing grows (and size and opacity
-    // shrink) the further they are from the centre. Coloured along the lime -> yellow accent.
-    var cv = show.querySelector('.show__dotsbg');
-    function drawDots() {
-      var S = show.clientWidth; if (!cv || !S) return;
-      var dpr = Math.min(window.devicePixelRatio || 1, 2), W = S * 1.4;
-      cv.width = Math.round(W * dpr); cv.height = Math.round(W * dpr);
-      var g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, W);
-      var c = W / 2, r0 = S * 0.36, rMax = W / 2, r = r0, ring = 0;
-      var A = [166, 245, 59], B = [246, 236, 63];
-      while (r < rMax) {
-        var t = (r - r0) / (rMax - r0);
-        var gap = S * (0.022 + 0.075 * Math.pow(t, 1.5));   // spacing grows with distance
-        var dot = S * 0.0062 * (1 - 0.55 * t);              // dots get smaller...
-        var alpha = Math.max(0, 0.9 * (1 - t * 1.05));        // ...and fainter
-        var n = Math.max(6, Math.floor(2 * Math.PI * r / gap)), phase = ring * 0.7;
-        for (var i = 0; i < n; i++) {
-          var a = phase + i * 2 * Math.PI / n, x = c + r * Math.cos(a), y = c + r * Math.sin(a);
-          var m = Math.min(1, Math.max(0, (x + y) / (2 * W)));
-          g.fillStyle = 'rgba(' + Math.round(A[0] + (B[0] - A[0]) * m) + ',' + Math.round(A[1] + (B[1] - A[1]) * m) + ',' + Math.round(A[2] + (B[2] - A[2]) * m) + ',' + alpha.toFixed(3) + ')';
-          g.beginPath(); g.arc(x, y, dot, 0, 2 * Math.PI); g.fill();
-        }
-        r += gap; ring++;
-      }
-    }
-    drawDots();
-    if (window.ResizeObserver) new ResizeObserver(drawDots).observe(show); else window.addEventListener('resize', drawDots);
-    go(0); restart();
+    if (window.ResizeObserver) new ResizeObserver(resize).observe(show); else window.addEventListener('resize', resize);
+    resize(); go(0); restart();
   }
 
   /* ---------- info: photo credits ---------- */
