@@ -249,11 +249,11 @@
       '<h1>' + esc(title) + '</h1>' +
       '<p class="byline">' + esc(t('post.by')) + ' ' + esc(T.postAuthor(p)) + '</p>' +
       T.videoHTML(p) +
-      (summary || !paras ? '<p class="post__summary' + (summary ? '' : ' placeholder') + '">' + esc(summary || t('post.summarySoon')) + '</p>' : '') +
+      (summary || !(paras || p.ingredients || p.steps) ? '<p class="post__summary' + (summary ? '' : ' placeholder') + '">' + esc(summary || t('post.summarySoon')) + '</p>' : '') +
       '<section class="post__body"><h2>' + esc(t('post.story')) + '</h2>' +
       (paras ? paras.map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') : '<p class="placeholder">' + esc(t('post.bodySoon')) + '</p>') +
       '</section>' +
-      (paras ? recipeHTML(p) : '') +
+      (paras || p.ingredients || p.steps ? recipeHTML(p) : '') +
       '<nav class="post__nav">' +
       '<a class="btn" href="' + T.postUrl(prev) + '">' + T.icon('arrow-left') + esc(t('post.prev')) + '</a>' +
       '<a class="btn btn--grad" href="' + T.postUrl(next) + '">' + esc(t('post.next')) + T.icon('arrow-right') + '</a>' +

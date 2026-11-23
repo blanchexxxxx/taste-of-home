@@ -8,7 +8,7 @@
    - keywords: a list of { word: '...', meaning: '...' } (optional).
    - ingredients: a list of strings; steps: a list of strings (numbered for you).
      Either can be split into groups: [{ title: 'Sambal', items: ['...', '...'] }, ...].
-     Leave either as null to show "coming soon". These only appear once body is filled in.
+     Leave either as null to show "coming soon". These appear once body, ingredients or steps is filled in.
    - role: 'teacher' shows "Our teacher" instead of "Student" when author is empty.
    - video:
        * a file in this repo, e.g. 'assets/videos/shenzhen.mp4'
@@ -31,7 +31,23 @@ window.LOCATIONS = {
 };
 
 window.POSTS = [
-  { id: 'china-shenzhen', location: 'shenzhen', author: null, title: null, summary: null, body: null, video: null, poster: null },
+  {
+    id: 'china-shenzhen', location: 'shenzhen', author: null,
+    title: 'Coca-Cola Chicken Wings',
+    summary: null,
+    body: null,
+    ingredients: ['Ginger', 'Chicken wings', 'Oil', 'Coca-Cola', 'Oyster sauce', 'Cooking wine', 'Soy sauce', 'Sugar', 'Dark soy sauce (optional)'],
+    steps: [
+      'First, make a few cuts on both sides of the chicken wings.',
+      'Put the wings in a pot of cold water. Add cooking wine and ginger, and bring it to the boil over high heat. Skim off the foam.',
+      'Take the wings out and dry them with kitchen paper.',
+      'Heat oil in a pan. Add the wings and fry them until they are golden brown.',
+      'Pour in Coca-Cola until it covers the wings.',
+      'Add soy sauce, oyster sauce, sugar, and dark soy sauce.',
+      'Cook over high heat for 15 minutes until the sauce becomes thick.'
+    ],
+    video: null, poster: null
+  },
   {
     id: 'indonesia', location: 'surabaya', author: null,
     title: 'Ayam Geprek',
