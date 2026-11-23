@@ -132,7 +132,7 @@ a { color: inherit; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* photo slideshow (pages.js): one big photo inside an irregular blob with blurred (feathered)
-   edges, over a drifting lime -> yellow glow. The blob slowly turns (and swings round on each new
+   edges, over a halftone ring of dots that spread out with distance. The blob slowly turns (and swings round on each new
    photo) while the photo counter-turns, so the outline keeps changing but the photo stays upright. */
 @property --turn { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
 @property --wob  { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
@@ -140,11 +140,7 @@ a { color: inherit; }
   --turn: 0deg; position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end;
   transition: --turn 1.6s var(--ease); animation: show-wobble 9s ease-in-out infinite alternate;
 }
-.show__aura { position: absolute; inset: -6%; rotate: var(--turn); pointer-events: none; }
-.show__aura span { position: absolute; filter: blur(42px); opacity: .85; animation: blob-morph 13s ease-in-out infinite alternate; }
-.show__aura span:nth-child(1) { inset: 6% 18% 22% 4%;  background: radial-gradient(circle at 35% 40%, #a6f53b, rgba(166, 245, 59, 0) 70%); }
-.show__aura span:nth-child(2) { inset: 20% 2% 8% 26%;  background: radial-gradient(circle at 60% 60%, #f6ec3f, rgba(246, 236, 63, 0) 70%); animation-duration: 17s; animation-delay: -5s; }
-.show__aura span:nth-child(3) { inset: 2% 10% 40% 34%; background: radial-gradient(circle at 50% 40%, #d4f53c, rgba(212, 245, 60, 0) 72%); opacity: .6; animation-duration: 11s; animation-delay: -8s; }
+.show__dotsbg { position: absolute; inset: -20%; width: 140%; height: 140%; max-width: none; rotate: var(--turn); pointer-events: none; }
 .show__frame {
   position: absolute; inset: 0; overflow: hidden;
   rotate: calc(var(--turn) + var(--wob));
@@ -162,12 +158,8 @@ a { color: inherit; }
 .show__dot::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: rgba(238, 241, 232, .3); transition: width .4s var(--ease), background .4s; }
 .show__dot.is-on::before { width: 22px; background: var(--grad); }
 @keyframes show-wobble { from { --wob: -10deg; } to { --wob: 14deg; } }
-@keyframes blob-morph {
-  0%   { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; transform: translate(0, 0) rotate(0deg); }
-  100% { border-radius: 40% 60% 45% 55% / 60% 40% 60% 40%; transform: translate(4%, -3%) rotate(40deg); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .show, .show__aura span { animation: none; transition: none; }
+  .show { animation: none; transition: none; }
   .show__img { transition: opacity .3s linear; scale: 1; }
 }
 

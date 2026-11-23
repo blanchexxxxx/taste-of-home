@@ -37,6 +37,34 @@
       if (photos.length > 1 && !document.hidden) timer = setInterval(function () { go(cur + 1); }, INTERVAL);
     }
     document.addEventListener('visibilitychange', restart);   // no switching in a background tab
+
+    // Halftone dots around the photo: rings of dots whose spacing grows (and size and opacity
+    // shrink) the further they are from the centre. Coloured along the lime -> yellow accent.
+    var cv = show.querySelector('.show__dotsbg');
+    function drawDots() {
+      var S = show.clientWidth; if (!cv || !S) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2), W = S * 1.4;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(W * dpr);
+      var g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, W);
+      var c = W / 2, r0 = S * 0.36, rMax = W / 2, r = r0, ring = 0;
+      var A = [166, 245, 59], B = [246, 236, 63];
+      while (r < rMax) {
+        var t = (r - r0) / (rMax - r0);
+        var gap = S * (0.022 + 0.075 * Math.pow(t, 1.5));   // spacing grows with distance
+        var dot = S * 0.0062 * (1 - 0.55 * t);              // dots get smaller...
+        var alpha = Math.max(0, 0.9 * (1 - t * 1.05));        // ...and fainter
+        var n = Math.max(6, Math.floor(2 * Math.PI * r / gap)), phase = ring * 0.7;
+        for (var i = 0; i < n; i++) {
+          var a = phase + i * 2 * Math.PI / n, x = c + r * Math.cos(a), y = c + r * Math.sin(a);
+          var m = Math.min(1, Math.max(0, (x + y) / (2 * W)));
+          g.fillStyle = 'rgba(' + Math.round(A[0] + (B[0] - A[0]) * m) + ',' + Math.round(A[1] + (B[1] - A[1]) * m) + ',' + Math.round(A[2] + (B[2] - A[2]) * m) + ',' + alpha.toFixed(3) + ')';
+          g.beginPath(); g.arc(x, y, dot, 0, 2 * Math.PI); g.fill();
+        }
+        r += gap; ring++;
+      }
+    }
+    drawDots();
+    if (window.ResizeObserver) new ResizeObserver(drawDots).observe(show); else window.addEventListener('resize', drawDots);
     go(0); restart();
   }
 
