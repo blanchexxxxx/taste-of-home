@@ -208,14 +208,14 @@
       }
       return '<' + tag + '>' + items.map(function (x) { return '<li>' + esc(T.pick(x)) + '</li>'; }).join('') + '</' + tag + '>';
     }
-    var kw = T.pick(p.keywords);
+    var kw = T.postField(p, 'keywords');
     return (kw && kw.length
         ? '<section class="post__body post__keywords"><h2>' + esc(t('post.keywords')) + '</h2><dl>' + kw.map(function (k) {
             return '<div><dt>' + esc(T.pick(k.word)) + '</dt>' + (k.meaning ? '<dd>' + esc(T.pick(k.meaning)) + '</dd>' : '') + '</div>';
           }).join('') + '</dl></section>'
         : '') +
-      '<section class="post__body post__list"><h2>' + esc(t('post.ingredients')) + '</h2>' + list('ul', p.ingredients) + '</section>' +
-      '<section class="post__body post__list"><h2>' + esc(t('post.method')) + '</h2>' + list('ol', p.steps) + '</section>';
+      '<section class="post__body post__list"><h2>' + esc(t('post.ingredients')) + '</h2>' + list('ul', T.postField(p, 'ingredients')) + '</section>' +
+      '<section class="post__body post__list"><h2>' + esc(t('post.method')) + '</h2>' + list('ol', T.postField(p, 'steps')) + '</section>';
   }
   function renderPost() {
     var id = new URLSearchParams(location.search).get('id');
@@ -235,8 +235,8 @@
       flag.style.setProperty('--flag', 'url("' + new URL('assets/img/flags/' + loc.code.toLowerCase() + '.svg', location.href).href + '")');
     }
     var title = T.postTitle(p);
-    var summary = T.pick(p.summary);
-    var body = T.pick(p.body);
+    var summary = T.postField(p, 'summary');
+    var body = T.postField(p, 'body');
     var paras = body ? (Array.isArray(body) ? body : [body]) : null;
     var prev = window.POSTS[(idx - 1 + window.POSTS.length) % window.POSTS.length];
     var next = window.POSTS[(idx + 1) % window.POSTS.length];

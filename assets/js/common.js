@@ -106,7 +106,13 @@
   }
 
   /* ---------- post helpers ---------- */
-  function postTitle(p) { return pick(p.title) || t('post.titleSoon'); }
+  /* A post field in the current language: assets/js/posts-i18n.js first, then data.js (English). */
+  function postField(p, field) {
+    var tr = window.POST_I18N && window.POST_I18N[p.id] && window.POST_I18N[p.id][lang];
+    if (tr && tr[field] != null) return tr[field];
+    return pick(p[field]);
+  }
+  function postTitle(p) { return postField(p, 'title') || t('post.titleSoon'); }
   function postAuthor(p) { return pick(p.author) || t(p.role === 'teacher' ? 'post.teacher' : 'post.student'); }
   function placeLabel(p) {
     var loc = p.location && window.LOCATIONS[p.location];
@@ -179,7 +185,7 @@
 
   window.TOH = {
     t: t, pick: pick, icon: icon, injectIcons: injectIcons, esc: esc, getLang: function () { return lang; }, setLang: setLang,
-    applyI18n: applyI18n, postTitle: postTitle, postAuthor: postAuthor, placeLabel: placeLabel,
+    applyI18n: applyI18n, postField: postField, postTitle: postTitle, postAuthor: postAuthor, placeLabel: placeLabel,
     postUrl: postUrl, videoHTML: videoHTML, openModal: openModal, closeModal: closeModal
   };
 
