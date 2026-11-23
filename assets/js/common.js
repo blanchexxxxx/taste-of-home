@@ -53,6 +53,9 @@
     (root || document).querySelectorAll('[data-i18n-aria]').forEach(function (el) {
       el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
     });
+    (root || document).querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      el.setAttribute('alt', t(el.getAttribute('data-i18n-alt')));
+    });
     document.documentElement.lang = lang;
   }
 

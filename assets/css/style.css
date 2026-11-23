@@ -113,7 +113,7 @@ a { color: inherit; }
 .btn--sm { height: 44px; padding: 0 20px; font-size: .95rem; }
 
 /* ---------- hero ---------- */
-.hero { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding: 96px 0 48px; }
+.hero { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding: 96px 0 48px; overflow-x: clip; }
 .hero__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: center; }
 .kicker {
   display: inline-flex; align-items: center; gap: 8px; margin: 0 0 22px; padding: 6px 14px;
@@ -131,19 +131,45 @@ a { color: inherit; }
 .hero__sub { max-width: 34ch; margin: 26px 0 32px; font-size: clamp(1.08rem, 1.6vw, 1.3rem); color: var(--muted); line-height: 1.5; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* bouncing balls (physics in pages.js): separate solid-colour balls that collide and bounce;
-   only the big ball shows its photo. Click a small ball to make it big; drag to throw. */
-.blobs { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-.blobs.is-over { cursor: grab; }
-.blobs.is-dragging { cursor: grabbing; }
-.blobs__defs { position: absolute; }
-.blobs__goo, .blobs__pics { position: absolute; inset: 0; pointer-events: none; }
-.ball, .pic { position: absolute; left: 0; top: 0; border-radius: 50%; transform-origin: 50% 50%; will-change: transform; }
-.ball { background: var(--c, var(--lime)); }
-.ball.is-big { background: var(--grad); }
-.pic { overflow: hidden; opacity: 0; transition: opacity .5s var(--ease); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .9); }
-.pic.is-big { opacity: 1; }
-.pic img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+/* photo slideshow (pages.js): one big photo inside an irregular blob with blurred (feathered)
+   edges, over a drifting lime -> yellow glow. The blob slowly turns (and swings round on each new
+   photo) while the photo counter-turns, so the outline keeps changing but the photo stays upright. */
+@property --turn { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+@property --wob  { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+.show {
+  --turn: 0deg; position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end;
+  transition: --turn 1.6s var(--ease); animation: show-wobble 9s ease-in-out infinite alternate;
+}
+.show__aura { position: absolute; inset: -6%; rotate: var(--turn); pointer-events: none; }
+.show__aura span { position: absolute; filter: blur(42px); opacity: .85; animation: blob-morph 13s ease-in-out infinite alternate; }
+.show__aura span:nth-child(1) { inset: 6% 18% 22% 4%;  background: radial-gradient(circle at 35% 40%, #a6f53b, rgba(166, 245, 59, 0) 70%); }
+.show__aura span:nth-child(2) { inset: 20% 2% 8% 26%;  background: radial-gradient(circle at 60% 60%, #f6ec3f, rgba(246, 236, 63, 0) 70%); animation-duration: 17s; animation-delay: -5s; }
+.show__aura span:nth-child(3) { inset: 2% 10% 40% 34%; background: radial-gradient(circle at 50% 40%, #d4f53c, rgba(212, 245, 60, 0) 72%); opacity: .6; animation-duration: 11s; animation-delay: -8s; }
+.show__frame {
+  position: absolute; inset: 0; overflow: hidden;
+  rotate: calc(var(--turn) + var(--wob));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='f' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Cpath d='M100.0 15.4 C115.8 15.6 132.3 32.7 146.8 44.2 C161.3 55.8 183.7 69.0 186.9 84.7 C190.2 100.3 176.0 122.8 166.2 138.2 C156.4 153.6 143.1 172.2 128.0 177.0 C112.9 181.7 92.9 172.3 75.7 166.7 C58.6 161.1 33.9 156.6 25.1 143.2 C16.3 129.8 18.4 103.1 22.9 86.4 C27.4 69.7 39.2 54.7 52.0 42.8 C64.9 31.0 84.2 15.1 100.0 15.4Z' fill='%23000' filter='url(%23f)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='f' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Cpath d='M100.0 15.4 C115.8 15.6 132.3 32.7 146.8 44.2 C161.3 55.8 183.7 69.0 186.9 84.7 C190.2 100.3 176.0 122.8 166.2 138.2 C156.4 153.6 143.1 172.2 128.0 177.0 C112.9 181.7 92.9 172.3 75.7 166.7 C58.6 161.1 33.9 156.6 25.1 143.2 C16.3 129.8 18.4 103.1 22.9 86.4 C27.4 69.7 39.2 54.7 52.0 42.8 C64.9 31.0 84.2 15.1 100.0 15.4Z' fill='%23000' filter='url(%23f)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.show__img {
+  position: absolute; inset: -14%; width: 128%; height: 128%; max-width: none; object-fit: cover;
+  rotate: calc(-1 * (var(--turn) + var(--wob)));
+  opacity: 0; scale: 1.08; transition: opacity .9s var(--ease), scale 2.6s var(--ease);
+}
+.show__img.is-on { opacity: 1; scale: 1; }
+.show__dots { position: absolute; left: 0; right: 0; bottom: -4px; display: flex; justify-content: center; gap: 4px; }
+.show__dot { width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.show__dot::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: rgba(238, 241, 232, .3); transition: width .4s var(--ease), background .4s; }
+.show__dot.is-on::before { width: 22px; background: var(--grad); }
+@keyframes show-wobble { from { --wob: -10deg; } to { --wob: 14deg; } }
+@keyframes blob-morph {
+  0%   { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; transform: translate(0, 0) rotate(0deg); }
+  100% { border-radius: 40% 60% 45% 55% / 60% 40% 60% 40%; transform: translate(4%, -3%) rotate(40deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .show, .show__aura span { animation: none; transition: none; }
+  .show__img { transition: opacity .3s linear; scale: 1; }
+}
 
 /* ---------- globe ---------- */
 .globe-block { padding: 24px 0 40px; scroll-margin-top: 72px; }
@@ -308,6 +334,17 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 .panel--grad { background: var(--grad); color: var(--on-grad); border-color: transparent; }
 .panel--grad p { color: inherit; opacity: .8; }
 .panel--wide { grid-column: 1 / -1; }
+.event { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(20px, 4vw, 48px); align-items: start; }
+.event__text h2 { margin-top: 14px; font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.15; }
+.event__lead { margin-bottom: 22px !important; font-size: 1.05rem; }
+.event__facts { margin: 0; display: grid; gap: 14px; }
+.event__facts div { padding-left: 14px; border-left: 2px solid var(--lime); }
+.event__facts dt { font-weight: 650; }
+.event__facts dd { margin: 2px 0 0; color: var(--muted); }
+.event__poster { display: block; border-radius: var(--r-media); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.event__poster img { width: 100%; height: auto; transition: transform .6s var(--ease); }
+.event__poster:hover img { transform: scale(1.02); }
+@media (max-width: 900px) { .event { grid-template-columns: 1fr; } .event__poster { max-width: 520px; } }
 .steps { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; counter-reset: s; }
 .steps li { display: flex; gap: 12px; align-items: baseline; }
 .steps li::before { counter-increment: s; content: counter(s); flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--on-grad); color: var(--lime); font-weight: 700; font-size: .9rem; }
@@ -329,7 +366,7 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .hero__grid { grid-template-columns: 1fr; }
-  .blobs { justify-self: center; max-width: 440px; }
+  .show { justify-self: center; max-width: 440px; }
   .info-grid { grid-template-columns: 1fr; }
   .team { grid-template-columns: repeat(3, 1fr); }
 }
