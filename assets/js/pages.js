@@ -165,9 +165,10 @@
   /* ---------- info: photo credits ---------- */
   var credits = document.getElementById('photo-credits');
   if (credits && window.HERO_PHOTOS) {
-    credits.innerHTML = 'Photos (Wikimedia Commons): ' + window.HERO_PHOTOS.map(function (ph) {
+    var commons = window.HERO_PHOTOS.filter(function (ph) { return ph.url; });
+    credits.innerHTML = commons.length ? 'Photos (Wikimedia Commons): ' + commons.map(function (ph) {
       return '<a href="' + esc(ph.url) + '" target="_blank" rel="noopener">' + esc(ph.alt) + '</a> (' + esc(ph.credit) + ')';
-    }).join(', ') + '.';
+    }).join(', ') + '.' : '';
   }
 
   /* ---------- posts grid ---------- */
@@ -194,6 +195,23 @@
 
   /* ---------- single post ---------- */
   var postEl = document.getElementById('post');
+
+  // Key words, ingredients and steps. A list left as null shows "coming soon".
+  function recipeHTML(p) {
+    function list(tag, items) {
+      items = T.pick(items);
+      if (!items || !items.length) return '<p class="placeholder">' + esc(t('post.recipeSoon')) + '</p>';
+      return '<' + tag + '>' + items.map(function (x) { return '<li>' + esc(T.pick(x)) + '</li>'; }).join('') + '</' + tag + '>';
+    }
+    var kw = T.pick(p.keywords);
+    return (kw && kw.length
+        ? '<section class="post__body post__keywords"><h2>' + esc(t('post.keywords')) + '</h2><dl>' + kw.map(function (k) {
+            return '<div><dt>' + esc(T.pick(k.word)) + '</dt>' + (k.meaning ? '<dd>' + esc(T.pick(k.meaning)) + '</dd>' : '') + '</div>';
+          }).join('') + '</dl></section>'
+        : '') +
+      '<section class="post__body post__list"><h2>' + esc(t('post.ingredients')) + '</h2>' + list('ul', p.ingredients) + '</section>' +
+      '<section class="post__body post__list"><h2>' + esc(t('post.method')) + '</h2>' + list('ol', p.steps) + '</section>';
+  }
   function renderPost() {
     var id = new URLSearchParams(location.search).get('id');
     var idx = -1;
@@ -218,10 +236,11 @@
       '<h1>' + esc(title) + '</h1>' +
       '<p class="byline">' + esc(t('post.by')) + ' ' + esc(T.postAuthor(p)) + '</p>' +
       T.videoHTML(p) +
-      '<p class="post__summary' + (summary ? '' : ' placeholder') + '">' + esc(summary || t('post.summarySoon')) + '</p>' +
+      (summary || !paras ? '<p class="post__summary' + (summary ? '' : ' placeholder') + '">' + esc(summary || t('post.summarySoon')) + '</p>' : '') +
       '<section class="post__body"><h2>' + esc(t('post.story')) + '</h2>' +
       (paras ? paras.map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') : '<p class="placeholder">' + esc(t('post.bodySoon')) + '</p>') +
       '</section>' +
+      (paras ? recipeHTML(p) : '') +
       '<nav class="post__nav">' +
       '<a class="btn" href="' + T.postUrl(prev) + '">' + T.icon('arrow-left') + esc(t('post.prev')) + '</a>' +
       '<a class="btn btn--grad" href="' + T.postUrl(next) + '">' + esc(t('post.next')) + T.icon('arrow-right') + '</a>' +

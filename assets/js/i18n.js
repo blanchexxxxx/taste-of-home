@@ -25,7 +25,7 @@ window.I18N = {
     'globe.loading': 'Loading the globe…',
     'globe.fallback': 'Your browser can’t show the 3D globe, so here are the stories as a list:',
     'posts.title': 'All food stories',
-    'posts.subtitle': 'Five students, five dishes, five short videos.',
+    'posts.subtitle': 'Five students and our teacher: six dishes, six short videos.',
     'posts.tba': 'Location coming soon',
     'posts.read': 'Read post',
     'post.by': 'By',
@@ -34,6 +34,11 @@ window.I18N = {
     'post.summarySoon': 'A short introduction to this dish will appear here.',
     'post.bodySoon': 'This student is still writing their post. Come back soon to read the full story behind the dish!',
     'post.story': 'The story',
+    'post.keywords': 'Key words',
+    'post.ingredients': 'Ingredients',
+    'post.method': 'How to make it',
+    'post.recipeSoon': 'Coming soon.',
+    'post.teacher': 'Our teacher',
     'post.back': 'All posts',
     'post.notFound': 'Sorry, we couldn’t find that post.',
     'post.prev': 'Previous',
@@ -56,8 +61,8 @@ window.I18N = {
     'info.contactH': 'Contact',
     'info.contactP': 'Contact details coming soon.',
     'footer.text': 'Made with love by international students for our English class.',
-    'country.china': 'China', 'country.indonesia': 'Indonesia', 'country.myanmar': 'Myanmar', 'country.srilanka': 'Sri Lanka',
-    'city.shenzhen': 'Shenzhen', 'city.surabaya': 'Surabaya', 'city.yangon': 'Yangon', 'city.colombo': 'Colombo'
+    'country.china': 'China', 'country.indonesia': 'Indonesia', 'country.myanmar': 'Myanmar', 'country.srilanka': 'Sri Lanka', 'country.australia': 'Australia',
+    'city.shenzhen': 'Shenzhen', 'city.surabaya': 'Surabaya', 'city.yangon': 'Yangon', 'city.colombo': 'Colombo', 'city.melbourne': 'Melbourne'
   },
 
   zh: {
@@ -73,7 +78,7 @@ window.I18N = {
     'globe.loading': '地球加载中…',
     'globe.fallback': '你的浏览器无法显示 3D 地球，以下是故事列表：',
     'posts.title': '全部美食故事',
-    'posts.subtitle': '五位同学，五道菜，五个短视频。',
+    'posts.subtitle': '五位同学和我们的老师，六道菜，六个短视频。',
     'posts.tba': '地点即将公布',
     'posts.read': '阅读帖子',
     'post.by': '作者',
@@ -82,6 +87,11 @@ window.I18N = {
     'post.summarySoon': '这道菜的简短介绍将显示在这里。',
     'post.bodySoon': '这位同学还在写帖子，敬请期待这道菜背后的完整故事！',
     'post.story': '背后的故事',
+    'post.keywords': '关键词',
+    'post.ingredients': '食材',
+    'post.method': '做法',
+    'post.recipeSoon': '即将更新。',
+    'post.teacher': '我们的老师',
     'post.back': '全部帖子',
     'post.notFound': '抱歉，找不到这篇帖子。',
     'post.prev': '上一篇',
@@ -104,8 +114,8 @@ window.I18N = {
     'info.contactH': '联系我们',
     'info.contactP': '联系方式即将公布。',
     'footer.text': '由留学生们为英语课用心制作。',
-    'country.china': '中国', 'country.indonesia': '印度尼西亚', 'country.myanmar': '缅甸', 'country.srilanka': '斯里兰卡',
-    'city.shenzhen': '深圳', 'city.surabaya': '泗水', 'city.yangon': '仰光', 'city.colombo': '科伦坡'
+    'country.china': '中国', 'country.indonesia': '印度尼西亚', 'country.myanmar': '缅甸', 'country.srilanka': '斯里兰卡', 'country.australia': '澳大利亚',
+    'city.shenzhen': '深圳', 'city.surabaya': '泗水', 'city.yangon': '仰光', 'city.colombo': '科伦坡', 'city.melbourne': '墨尔本'
   },
 
   ja: {
@@ -121,7 +131,7 @@ window.I18N = {
     'globe.loading': '地球を読み込み中…',
     'globe.fallback': 'お使いのブラウザでは3D地球を表示できません。ストーリーの一覧はこちらです：',
     'posts.title': 'すべてのフードストーリー',
-    'posts.subtitle': '5人の学生、5つの料理、5本のショート動画。',
+    'posts.subtitle': '5人の学生と先生、6つの料理、6本のショート動画。',
     'posts.tba': '場所は近日公開',
     'posts.read': '投稿を読む',
     'post.by': '作成者',
@@ -130,6 +140,11 @@ window.I18N = {
     'post.summarySoon': 'この料理の短い紹介がここに表示されます。',
     'post.bodySoon': 'この学生はまだ投稿を書いています。料理にまつわるストーリーを読みに、また来てくださいね！',
     'post.story': 'ストーリー',
+    'post.keywords': 'キーワード',
+    'post.ingredients': '材料',
+    'post.method': '作り方',
+    'post.recipeSoon': '近日公開。',
+    'post.teacher': '私たちの先生',
     'post.back': 'すべての投稿',
     'post.notFound': '申し訳ありません。その投稿は見つかりませんでした。',
     'post.prev': '前へ',
@@ -152,8 +167,8 @@ window.I18N = {
     'info.contactH': 'お問い合わせ',
     'info.contactP': '連絡先は近日公開。',
     'footer.text': '英語の授業のために、留学生たちが心を込めて作りました。',
-    'country.china': '中国', 'country.indonesia': 'インドネシア', 'country.myanmar': 'ミャンマー', 'country.srilanka': 'スリランカ',
-    'city.shenzhen': '深圳', 'city.surabaya': 'スラバヤ', 'city.yangon': 'ヤンゴン', 'city.colombo': 'コロンボ'
+    'country.china': '中国', 'country.indonesia': 'インドネシア', 'country.myanmar': 'ミャンマー', 'country.srilanka': 'スリランカ', 'country.australia': 'オーストラリア',
+    'city.shenzhen': '深圳', 'city.surabaya': 'スラバヤ', 'city.yangon': 'ヤンゴン', 'city.colombo': 'コロンボ', 'city.melbourne': 'メルボルン'
   },
 
   id: {
@@ -169,7 +184,7 @@ window.I18N = {
     'globe.loading': 'Memuat globe…',
     'globe.fallback': 'Browser Anda tidak dapat menampilkan globe 3D, jadi berikut daftar ceritanya:',
     'posts.title': 'Semua cerita makanan',
-    'posts.subtitle': 'Lima mahasiswa, lima hidangan, lima video pendek.',
+    'posts.subtitle': 'Lima mahasiswa dan guru kami: enam hidangan, enam video pendek.',
     'posts.tba': 'Lokasi segera hadir',
     'posts.read': 'Baca postingan',
     'post.by': 'Oleh',
@@ -178,6 +193,11 @@ window.I18N = {
     'post.summarySoon': 'Pengantar singkat tentang hidangan ini akan muncul di sini.',
     'post.bodySoon': 'Mahasiswa ini masih menulis postingannya. Kembali lagi nanti untuk membaca kisah lengkap di balik hidangan ini!',
     'post.story': 'Ceritanya',
+    'post.keywords': 'Kata kunci',
+    'post.ingredients': 'Bahan',
+    'post.method': 'Cara membuat',
+    'post.recipeSoon': 'Segera hadir.',
+    'post.teacher': 'Guru kami',
     'post.back': 'Semua postingan',
     'post.notFound': 'Maaf, postingan itu tidak ditemukan.',
     'post.prev': 'Sebelumnya',
@@ -200,8 +220,8 @@ window.I18N = {
     'info.contactH': 'Kontak',
     'info.contactP': 'Detail kontak segera hadir.',
     'footer.text': 'Dibuat dengan cinta oleh mahasiswa internasional untuk kelas bahasa Inggris kami.',
-    'country.china': 'Tiongkok', 'country.indonesia': 'Indonesia', 'country.myanmar': 'Myanmar', 'country.srilanka': 'Sri Lanka',
-    'city.shenzhen': 'Shenzhen', 'city.surabaya': 'Surabaya', 'city.yangon': 'Yangon', 'city.colombo': 'Kolombo'
+    'country.china': 'Tiongkok', 'country.indonesia': 'Indonesia', 'country.myanmar': 'Myanmar', 'country.srilanka': 'Sri Lanka', 'country.australia': 'Australia',
+    'city.shenzhen': 'Shenzhen', 'city.surabaya': 'Surabaya', 'city.yangon': 'Yangon', 'city.colombo': 'Kolombo', 'city.melbourne': 'Melbourne'
   },
 
   my: {
@@ -217,7 +237,7 @@ window.I18N = {
     'globe.loading': 'ကမ္ဘာလုံးကို ဖွင့်နေသည်…',
     'globe.fallback': 'သင့်ဘရောက်ဆာတွင် 3D ကမ္ဘာလုံးကို မပြနိုင်ပါ၊ ဇာတ်လမ်းစာရင်းမှာ ဤတွင်ဖြစ်သည်-',
     'posts.title': 'အစားအစာ ဇာတ်လမ်းအားလုံး',
-    'posts.subtitle': 'ကျောင်းသား ငါးဦး၊ ဟင်းလျာ ငါးမျိုး၊ ဗီဒီယိုတို ငါးခု။',
+    'posts.subtitle': 'ကျောင်းသား ငါးဦးနှင့် ဆရာ၊ ဟင်းလျာ ခြောက်မျိုး၊ ဗီဒီယိုတို ခြောက်ခု။',
     'posts.tba': 'နေရာကို မကြာမီ ကြေညာပါမည်',
     'posts.read': 'ပို့စ်ကို ဖတ်ရန်',
     'post.by': 'ရေးသူ',
@@ -226,6 +246,11 @@ window.I18N = {
     'post.summarySoon': 'ဤဟင်းလျာအကြောင်း အကျဉ်းချုပ်ကို ဤနေရာတွင် ပြပါမည်။',
     'post.bodySoon': 'ဤကျောင်းသားသည် ပို့စ်ကို ရေးနေဆဲဖြစ်သည်။ ဟင်းလျာ၏ နောက်ကွယ်ရှိ ဇာတ်လမ်းအပြည့်အစုံကို ဖတ်ရန် မကြာမီ ပြန်လာခဲ့ပါ။',
     'post.story': 'ဇာတ်လမ်း',
+    'post.keywords': 'သော့ချက်စကားလုံးများ',
+    'post.ingredients': 'ပါဝင်ပစ္စည်းများ',
+    'post.method': 'ပြုလုပ်နည်း',
+    'post.recipeSoon': 'မကြာမီ လာမည်။',
+    'post.teacher': 'ကျွန်ုပ်တို့၏ ဆရာ',
     'post.back': 'ပို့စ်အားလုံး',
     'post.notFound': 'စိတ်မကောင်းပါ၊ ထိုပို့စ်ကို ရှာမတွေ့ပါ။',
     'post.prev': 'ယခင်',
@@ -248,8 +273,8 @@ window.I18N = {
     'info.contactH': 'ဆက်သွယ်ရန်',
     'info.contactP': 'ဆက်သွယ်ရန် အချက်အလက်များ မကြာမီ လာမည်။',
     'footer.text': 'ကျွန်ုပ်တို့၏ အင်္ဂလိပ်စာအတန်းအတွက် နိုင်ငံခြားကျောင်းသားများက မေတ္တာဖြင့် ပြုလုပ်ထားသည်။',
-    'country.china': 'တရုတ်', 'country.indonesia': 'အင်ဒိုနီးရှား', 'country.myanmar': 'မြန်မာ', 'country.srilanka': 'သီရိလင်္ကာ',
-    'city.shenzhen': 'ရှန်ကျန်း', 'city.surabaya': 'ဆူရာဘာယာ', 'city.yangon': 'ရန်ကုန်', 'city.colombo': 'ကိုလံဘို'
+    'country.china': 'တရုတ်', 'country.indonesia': 'အင်ဒိုနီးရှား', 'country.myanmar': 'မြန်မာ', 'country.srilanka': 'သီရိလင်္ကာ', 'country.australia': 'ဩစတြေးလျ',
+    'city.shenzhen': 'ရှန်ကျန်း', 'city.surabaya': 'ဆူရာဘာယာ', 'city.yangon': 'ရန်ကုန်', 'city.colombo': 'ကိုလံဘို', 'city.melbourne': 'မဲလ်ဘုန်း'
   },
 
   si: {
@@ -265,7 +290,7 @@ window.I18N = {
     'globe.loading': 'ගෝලය පූරණය වෙමින්…',
     'globe.fallback': 'ඔබගේ බ්‍රවුසරයට 3D ගෝලය පෙන්විය නොහැක, එබැවින් කතා ලැයිස්තුව මෙන්න:',
     'posts.title': 'සියලුම කෑම කතා',
-    'posts.subtitle': 'සිසුන් පස් දෙනෙක්, කෑම වර්ග පහක්, කෙටි වීඩියෝ පහක්.',
+    'posts.subtitle': 'සිසුන් පස් දෙනෙක් සහ අපේ ගුරුතුමා, කෑම වර්ග හයක්, කෙටි වීඩියෝ හයක්.',
     'posts.tba': 'ස්ථානය ඉක්මනින්',
     'posts.read': 'පළ කිරීම කියවන්න',
     'post.by': 'ලියූයේ',
@@ -274,6 +299,11 @@ window.I18N = {
     'post.summarySoon': 'මෙම කෑම පිළිබඳ කෙටි හැඳින්වීමක් මෙහි දිස්වනු ඇත.',
     'post.bodySoon': 'මෙම සිසුවා තවමත් පළ කිරීම ලියමින් සිටී. කෑම පිටුපස ඇති සම්පූර්ණ කතාව කියවීමට ඉක්මනින් නැවත පැමිණෙන්න!',
     'post.story': 'කතාව',
+    'post.keywords': 'මූල පද',
+    'post.ingredients': 'අමුද්‍රව්‍ය',
+    'post.method': 'සාදන ආකාරය',
+    'post.recipeSoon': 'ළඟදීම.',
+    'post.teacher': 'අපේ ගුරුතුමා',
     'post.back': 'සියලුම පළ කිරීම්',
     'post.notFound': 'කණගාටුයි, එම පළ කිරීම සොයාගත නොහැක.',
     'post.prev': 'පෙර',
@@ -296,8 +326,8 @@ window.I18N = {
     'info.contactH': 'සම්බන්ධ වන්න',
     'info.contactP': 'සම්බන්ධතා විස්තර ඉක්මනින්.',
     'footer.text': 'අපේ ඉංග්‍රීසි පන්තිය සඳහා විදේශීය සිසුන් විසින් ආදරයෙන් සාදන ලදී.',
-    'country.china': 'චීනය', 'country.indonesia': 'ඉන්දුනීසියාව', 'country.myanmar': 'මියන්මාරය', 'country.srilanka': 'ශ්‍රී ලංකාව',
-    'city.shenzhen': 'ෂෙන්සෙන්', 'city.surabaya': 'සුරබායා', 'city.yangon': 'යැංගොන්', 'city.colombo': 'කොළඹ'
+    'country.china': 'චීනය', 'country.indonesia': 'ඉන්දුනීසියාව', 'country.myanmar': 'මියන්මාරය', 'country.srilanka': 'ශ්‍රී ලංකාව', 'country.australia': 'ඕස්ට්‍රේලියාව',
+    'city.shenzhen': 'ෂෙන්සෙන්', 'city.surabaya': 'සුරබායා', 'city.yangon': 'යැංගොන්', 'city.colombo': 'කොළඹ', 'city.melbourne': 'මෙල්බර්න්'
   },
 
   ta: {
@@ -313,7 +343,7 @@ window.I18N = {
     'globe.loading': 'உலக உருண்டை ஏற்றப்படுகிறது…',
     'globe.fallback': 'உங்கள் உலாவியால் 3D உலகைக் காட்ட முடியவில்லை, எனவே கதைகளின் பட்டியல் இதோ:',
     'posts.title': 'அனைத்து உணவுக் கதைகள்',
-    'posts.subtitle': 'ஐந்து மாணவர்கள், ஐந்து உணவுகள், ஐந்து குறும் காணொளிகள்.',
+    'posts.subtitle': 'ஐந்து மாணவர்களும் எங்கள் ஆசிரியரும், ஆறு உணவுகள், ஆறு குறும் காணொளிகள்.',
     'posts.tba': 'இடம் விரைவில்',
     'posts.read': 'பதிவைப் படிக்க',
     'post.by': 'எழுதியவர்',
@@ -322,6 +352,11 @@ window.I18N = {
     'post.summarySoon': 'இந்த உணவு பற்றிய சிறு அறிமுகம் இங்கே தோன்றும்.',
     'post.bodySoon': 'இந்த மாணவர் இன்னும் பதிவை எழுதிக்கொண்டிருக்கிறார். உணவின் பின்னணிக் கதையைப் படிக்க விரைவில் திரும்பி வாருங்கள்!',
     'post.story': 'கதை',
+    'post.keywords': 'முக்கியச் சொற்கள்',
+    'post.ingredients': 'தேவையான பொருட்கள்',
+    'post.method': 'செய்முறை',
+    'post.recipeSoon': 'விரைவில் வரும்.',
+    'post.teacher': 'எங்கள் ஆசிரியர்',
     'post.back': 'அனைத்து பதிவுகள்',
     'post.notFound': 'மன்னிக்கவும், அந்தப் பதிவைக் கண்டுபிடிக்க முடியவில்லை.',
     'post.prev': 'முந்தையது',
@@ -344,7 +379,7 @@ window.I18N = {
     'info.contactH': 'தொடர்புக்கு',
     'info.contactP': 'தொடர்பு விவரங்கள் விரைவில்.',
     'footer.text': 'எங்கள் ஆங்கில வகுப்பிற்காக சர்வதேச மாணவர்கள் அன்புடன் உருவாக்கியது.',
-    'country.china': 'சீனா', 'country.indonesia': 'இந்தோனேசியா', 'country.myanmar': 'மியான்மர்', 'country.srilanka': 'இலங்கை',
-    'city.shenzhen': 'ஷென்சென்', 'city.surabaya': 'சுரபாயா', 'city.yangon': 'யாங்கோன்', 'city.colombo': 'கொழும்பு'
+    'country.china': 'சீனா', 'country.indonesia': 'இந்தோனேசியா', 'country.myanmar': 'மியான்மர்', 'country.srilanka': 'இலங்கை', 'country.australia': 'ஆஸ்திரேலியா',
+    'city.shenzhen': 'ஷென்சென்', 'city.surabaya': 'சுரபாயா', 'city.yangon': 'யாங்கோன்', 'city.colombo': 'கொழும்பு', 'city.melbourne': 'மெல்போர்ன்'
   }
 };

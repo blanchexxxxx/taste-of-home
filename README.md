@@ -5,7 +5,7 @@
 
 **Home-cooked food stories from international students, on a 3D globe.**
 
-An English class project by five students from China, Indonesia, Myanmar and Sri Lanka.
+An English class project by five students from China, Indonesia, Myanmar and Sri Lanka, plus our teacher in Melbourne, Australia.
 
 [**Visit the site →**](https://blanchexxxxx.github.io/taste-of-home/)
 
@@ -113,7 +113,7 @@ The site's code is released under the [MIT License](LICENSE). Bundled libraries,
 
 ## 中文说明
 
-**Taste of Home** 是我们英语课的项目网站：来自中国、印度尼西亚、缅甸和斯里兰卡的五位留学生，各自介绍一道家乡菜，配一段短视频。
+**Taste of Home** 是我们英语课的项目网站：来自中国、印度尼西亚、缅甸和斯里兰卡的五位留学生，加上我们在澳大利亚墨尔本的老师，各自介绍一道家乡菜，配一段短视频。
 
 网站地址：https://blanchexxxxx.github.io/taste-of-home/
 
@@ -150,7 +150,7 @@ The site's code is released under the [MIT License](LICENSE). Bundled libraries,
 
 ## 日本語
 
-**Taste of Home** は英語の授業のプロジェクトサイトです。中国、インドネシア、ミャンマー、スリランカから来た 5 人の留学生が、それぞれふるさとの家庭料理を短い動画と文章で紹介します。
+**Taste of Home** は英語の授業のプロジェクトサイトです。中国、インドネシア、ミャンマー、スリランカから来た 5 人の留学生と、オーストラリア・メルボルンの先生が、それぞれふるさとの家庭料理を短い動画と文章で紹介します。
 
 サイト：https://blanchexxxxx.github.io/taste-of-home/
 

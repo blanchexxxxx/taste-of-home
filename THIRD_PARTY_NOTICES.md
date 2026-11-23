@@ -22,9 +22,7 @@ The round photos on the home page are placeholders from Wikimedia Commons, cropp
 
 | File | Original | Author | License |
 |---|---|---|---|
-| `assets/img/hero/wok.jpg` | [Cooking with a wok on an outdoor stove 5](https://commons.wikimedia.org/wiki/File:Cooking_with_a_wok_on_an_outdoor_stove_5.jpg) | Mx. Granger | CC0 1.0 |
 | `assets/img/hero/noodles.jpg` | [Homemade Chinese stir fry noodles](https://commons.wikimedia.org/wiki/File:Homemade_Chinese_stir_fry_noodles.jpg) | Sonny doe | CC BY-SA 4.0 |
-| `assets/img/hero/nasigoreng.jpg` | [Nasi Goreng Travelling Vendor in Jakarta](https://commons.wikimedia.org/wiki/File:Nasi_Goreng_Travelling_Vendor_in_Jakarta.JPG) | Gunkarta | CC BY-SA 3.0 |
 | `assets/img/hero/mohinga.jpg` | [Mohinga (20250315)](https://commons.wikimedia.org/wiki/File:Mohinga_(20250315).jpg) | Allervous | CC BY-SA 4.0 |
 | `assets/img/hero/curry.jpg` | [Sri lankan chicken curry](https://commons.wikimedia.org/wiki/File:Sri_lankan_chicken_curry.jpg) | Swarnamala Priyadarshani | CC BY-SA 4.0 |
 

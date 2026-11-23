@@ -107,7 +107,7 @@
 
   /* ---------- post helpers ---------- */
   function postTitle(p) { return pick(p.title) || t('post.titleSoon'); }
-  function postAuthor(p) { return pick(p.author) || t('post.student'); }
+  function postAuthor(p) { return pick(p.author) || t(p.role === 'teacher' ? 'post.teacher' : 'post.student'); }
   function placeLabel(p) {
     var loc = p.location && window.LOCATIONS[p.location];
     if (!loc) return t('posts.tba');

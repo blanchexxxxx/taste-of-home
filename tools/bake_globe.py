@@ -19,7 +19,7 @@ import os
 from PIL import Image, ImageDraw
 
 W, H = 4096, 2048                       # work at 4k, then downscale
-HIGHLIGHT = {'CHN', 'IDN', 'MMR', 'LKA'}  # ISO A3 codes of the students' countries
+HIGHLIGHT = {'CHN', 'IDN', 'MMR', 'LKA', 'AUS'}  # ISO A3 codes of the students' countries
 OCEAN = (17, 20, 18)
 LAND = (30, 36, 30)                     # faint silhouette so coastlines read
 LAND_HL = (52, 64, 30)
