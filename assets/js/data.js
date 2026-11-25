@@ -191,9 +191,9 @@ window.POSTS = [
    Replace with your own photos any time: put the file in assets/img/hero/ and edit this list. */
 window.HERO_PHOTOS = [
   { src: 'assets/img/hero/pavlova.jpg',        alt: 'Pavlova with cream and strawberries (Australia)' },
-  { src: 'assets/img/hero/cola-wings.jpg',     alt: 'Coca-Cola chicken wings (China)',                    credit: 'Alpha from Melbourne, CC BY-SA 2.0',  url: 'https://commons.wikimedia.org/wiki/File:Chicken_Wings_in_Coca_Cola_Sauce.jpg' },
-  { src: 'assets/img/hero/ayam-geprek.jpg',    alt: 'Ayam Geprek, crushed fried chicken with sambal (Indonesia)' },
   { src: 'assets/img/hero/lahpet.jpg',         alt: 'Lahpet Thoke, Myanmar tea leaf salad' },
   { src: 'assets/img/hero/srilanka-curry.jpg', alt: 'Sri Lankan rice and curry',                          credit: 'Lankan Foodie, CC BY-SA 4.0',         url: 'https://commons.wikimedia.org/wiki/File:Sri_Lankan_Rice_and_Curry.jpg' },
-  { src: 'assets/img/hero/kyawk-kyaw.jpg',     alt: 'Kyawk Kyaw, Myanmar coconut jelly' }
+  { src: 'assets/img/hero/kyawk-kyaw.jpg',     alt: 'Kyawk Kyaw, Myanmar coconut jelly' },
+  { src: 'assets/img/hero/ayam-geprek.jpg',    alt: 'Ayam Geprek, crushed fried chicken with sambal (Indonesia)' },
+  { src: 'assets/img/hero/cola-wings.jpg',     alt: 'Coca-Cola chicken wings (China)',                    credit: 'Alpha from Melbourne, CC BY-SA 2.0',  url: 'https://commons.wikimedia.org/wiki/File:Chicken_Wings_in_Coca_Cola_Sauce.jpg' }
 ];
