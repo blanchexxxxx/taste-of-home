@@ -156,7 +156,10 @@ window.POSTS = [
       { title: 'For the sauce (mixture of sauces of your choice)', items: ['Greek yogurt (Optional)', 'Salsa', 'Mayonnaise', 'Ketchup', 'Sriracha sauce', 'Pesto'] }
     ],
     steps: null,
-    video: null, poster: null
+    photos: [
+      { src: 'assets/img/posters/sri-lanka.jpg', alt: 'Homemade burritos' }
+    ],
+    video: null, poster: 'assets/img/posters/sri-lanka.jpg'
   },
   {
     id: 'australia', location: 'melbourne', author: 'Martin Parsons', role: 'teacher',
@@ -192,7 +195,7 @@ window.POSTS = [
 window.HERO_PHOTOS = [
   { src: 'assets/img/hero/pavlova.jpg',        alt: 'Pavlova with cream and strawberries (Australia)' },
   { src: 'assets/img/hero/lahpet.jpg',         alt: 'Lahpet Thoke, Myanmar tea leaf salad' },
-  { src: 'assets/img/hero/srilanka-curry.jpg', alt: 'Sri Lankan rice and curry',                          credit: 'Lankan Foodie, CC BY-SA 4.0',         url: 'https://commons.wikimedia.org/wiki/File:Sri_Lankan_Rice_and_Curry.jpg' },
+  { src: 'assets/img/hero/burritos.jpg',       alt: 'Homemade burritos (Sri Lanka)' },
   { src: 'assets/img/hero/kyawk-kyaw.jpg',     alt: 'Kyawk Kyaw, Myanmar coconut jelly' },
   { src: 'assets/img/hero/ayam-geprek.jpg',    alt: 'Ayam Geprek, crushed fried chicken with sambal (Indonesia)' },
   { src: 'assets/img/hero/cola-wings.jpg',     alt: 'Coca-Cola chicken wings (China)',                    credit: 'Alpha from Melbourne, CC BY-SA 2.0',  url: 'https://commons.wikimedia.org/wiki/File:Chicken_Wings_in_Coca_Cola_Sauce.jpg' }
