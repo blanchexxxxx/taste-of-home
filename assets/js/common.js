@@ -130,6 +130,11 @@
 
   function videoHTML(p) {
     var v = p.video;
+    if (!v && p.photos && p.photos.length) {   // no video: show the photos instead
+      return '<div class="photos' + (p.photos.length === 1 ? ' photos--one' : '') + '">' + p.photos.map(function (ph) {
+        return '<a href="' + esc(ph.src) + '" target="_blank" rel="noopener"><img src="' + esc(ph.src) + '" alt="' + esc(pick(ph.alt) || '') + '" loading="lazy"></a>';
+      }).join('') + '</div>';
+    }
     if (!v) {
       return '<div class="video video--empty"><span class="play">' + icon('play') + '</span><span>' + esc(t('post.videoSoon')) + '</span></div>';
     }

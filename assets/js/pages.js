@@ -103,9 +103,10 @@
     function list(tag, items) {
       items = T.pick(items);
       if (!items || !items.length) return '<p class="placeholder">' + esc(t('post.recipeSoon')) + '</p>';
-      if (items[0] && items[0].items) {   // grouped: [{ title: 'Sambal', items: [...] }, ...]
+      if (items[0] && items[0].items) {   // grouped: [{ title: 'Sambal', note: '...', items: [...] }, ...]
         return items.map(function (g) {
-          return (g.title ? '<h3>' + esc(T.pick(g.title)) + '</h3>' : '') + list(tag, g.items);
+          return (g.note ? '<p class="post__note">' + esc(T.pick(g.note)) + '</p>' : '') +
+            (g.title ? '<h3>' + esc(T.pick(g.title)) + '</h3>' : '') + list(tag, g.items);
         }).join('');
       }
       return '<' + tag + '>' + items.map(function (x) { return '<li>' + esc(T.pick(x)) + '</li>'; }).join('') + '</' + tag + '>';

@@ -7,7 +7,8 @@
    - body: a list of paragraphs, e.g. ['First paragraph', 'Second'].
    - keywords: a list of { word: '...', meaning: '...' } (optional).
    - ingredients: a list of strings; steps: a list of strings (numbered for you).
-     Either can be split into groups: [{ title: 'Sambal', items: ['...', '...'] }, ...].
+     Either can be split into groups: [{ title: 'Sambal', items: ['...', '...'] }, ...];
+     a group can also have a note shown above it: { note: '...', title: '...', items: [...] }.
      Leave either as null to show "coming soon". These appear once body, ingredients or steps is filled in.
    - role: 'teacher' marks our professor (shown as "Professor" next to the name and first in the Info page team).
    - video:
@@ -15,6 +16,7 @@
          (GitHub's limit is 100 MB per file; compress to 720p first), or
        * an embed URL, e.g. 'https://www.youtube.com/embed/VIDEO_ID'
          or 'https://player.bilibili.com/player.html?bvid=BVxxxx'
+   - photos: optional list of { src, alt } shown where the video goes when there is no video.
    - poster: optional cover image, e.g. 'assets/img/posters/<post id>.jpg' (a frame from the video)
    - location: one of the keys in LOCATIONS below (or null if unknown).
      Posts that share a location share one globe label; the popup lists them all.
@@ -90,7 +92,7 @@ window.POSTS = [
     video: 'assets/videos/indonesia.mp4', poster: 'assets/img/posters/indonesia.jpg'
   },
   {
-    id: 'myanmar-1', location: 'yangon', author: null,
+    id: 'myanmar-1', location: 'yangon', author: 'Moe Sandar Soe',
     title: 'Lahpet Thoke (Tea Leaf Salad)',
     summary: null,
     body: [
@@ -109,7 +111,11 @@ window.POSTS = [
       'Mix all the ingredients together.',
       'Finally, put the salad on a plate and serve it.'
     ],
-    video: null, poster: null
+    photos: [
+      { src: 'assets/img/posts/myanmar-1-a.jpg', alt: 'The ingredients for Lahpet Thoke' },
+      { src: 'assets/img/posts/myanmar-1-b.jpg', alt: 'Lahpet Thoke, ready to eat' }
+    ],
+    video: null, poster: 'assets/img/posts/myanmar-1-b.jpg'
   },
   {
     id: 'myanmar-2', location: 'yangon', author: 'Aung Moe',
@@ -134,7 +140,24 @@ window.POSTS = [
     ],
     video: 'assets/videos/myanmar-2.mp4', poster: 'assets/img/posters/myanmar-2.jpg'
   },
-  { id: 'sri-lanka',      location: 'colombo',  author: 'Tharusha Dasunpriya', title: null, summary: null, body: null, video: null, poster: null },
+  {
+    id: 'sri-lanka', location: 'colombo', author: 'Tharusha Dasunpriya',
+    title: 'Burritos',
+    summary: null,
+    body: [
+      'Burritos aren’t from Sri Lanka, but they’re one of my favorite things to cook here in Japan. It’s easy, cheap, and you can make it with whatever you have at home. Even though burritos are originally from Mexico, you can fill it with flavors from your own country. All that matters is what you put inside the wraps.',
+      'Another thing I love about burritos is that you can make a large batch, put them in the freezer and eat throughout the week. All you have to do is microwave it. That comes in handy for people who don’t have that much time to cook everyday.'
+    ],
+    ingredients: [
+      { items: ['Ground meat (minced meat)', 'Tortilla wraps', 'Eggs', 'Salt', 'Shredded cheese', 'Garlic'] },
+      { note: 'The ingredients below are not all necessary. You can switch them up with your favorites. There are some recommendations below.',
+        title: 'Spices of your choice', items: ['Chili powder', 'Cajun spice', 'Cumin powder', 'Garlic powder'] },
+      { title: 'Vegetables of your choice', items: ['Onion', 'Bell pepper', 'Mushrooms', 'Carrot'] },
+      { title: 'For the sauce (mixture of sauces of your choice)', items: ['Greek yogurt (Optional)', 'Salsa', 'Mayonnaise', 'Ketchup', 'Sriracha sauce', 'Pesto'] }
+    ],
+    steps: null,
+    video: null, poster: null
+  },
   {
     id: 'australia', location: 'melbourne', author: 'Martin Parsons', role: 'teacher',
     title: 'Pavlova',
@@ -163,13 +186,14 @@ window.POSTS = [
   }
 ];
 
-/* Home page round "liquid" photos (first 5 are used; square images work best). The first one starts as the big ball.
+/* Home page slideshow photos (portrait 4:5 works best, e.g. 960x1200). The first one is shown first.
    Photos with a `url` are placeholders from Wikimedia Commons (credited on the Info page); the others are the class's own photos.
    Replace with your own photos any time: put the file in assets/img/hero/ and edit this list. */
 window.HERO_PHOTOS = [
   { src: 'assets/img/hero/pavlova.jpg',        alt: 'Pavlova with cream and strawberries (Australia)' },
   { src: 'assets/img/hero/cola-wings.jpg',     alt: 'Coca-Cola chicken wings (China)',                    credit: 'Alpha from Melbourne, CC BY-SA 2.0',  url: 'https://commons.wikimedia.org/wiki/File:Chicken_Wings_in_Coca_Cola_Sauce.jpg' },
   { src: 'assets/img/hero/ayam-geprek.jpg',    alt: 'Ayam Geprek, crushed fried chicken with sambal (Indonesia)' },
-  { src: 'assets/img/hero/lahpet.jpg',         alt: 'Lahpet, Myanmar fermented tea leaf salad',           credit: 'Saosukham, CC0',                      url: 'https://commons.wikimedia.org/wiki/File:Fermented_Tea_Leaf_Salad.jpg' },
-  { src: 'assets/img/hero/srilanka-curry.jpg', alt: 'Sri Lankan rice and curry',                          credit: 'Lankan Foodie, CC BY-SA 4.0',         url: 'https://commons.wikimedia.org/wiki/File:Sri_Lankan_Rice_and_Curry.jpg' }
+  { src: 'assets/img/hero/lahpet.jpg',         alt: 'Lahpet Thoke, Myanmar tea leaf salad' },
+  { src: 'assets/img/hero/srilanka-curry.jpg', alt: 'Sri Lankan rice and curry',                          credit: 'Lankan Foodie, CC BY-SA 4.0',         url: 'https://commons.wikimedia.org/wiki/File:Sri_Lankan_Rice_and_Curry.jpg' },
+  { src: 'assets/img/hero/kyawk-kyaw.jpg',     alt: 'Kyawk Kyaw, Myanmar coconut jelly' }
 ];

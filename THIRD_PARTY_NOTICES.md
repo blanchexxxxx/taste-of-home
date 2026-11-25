@@ -19,12 +19,11 @@ The site's own code is MIT-licensed (see [LICENSE](LICENSE)). The following part
 
 ## Photos from Wikimedia Commons
 
-Three of the photos in the home page slideshow come from Wikimedia Commons, cropped to 4:5 and resized. Each one keeps its original license; the cropped versions in this repo are shared under the same license. (The pavlova and ayam geprek photos are the class's own.)
+Two of the photos in the home page slideshow come from Wikimedia Commons, cropped to 4:5 and resized. Each one keeps its original license; the cropped versions in this repo are shared under the same license. (The other photos were provided by the class.)
 
 | File | Original | Author | License |
 |---|---|---|---|
 | `assets/img/hero/cola-wings.jpg` | [Chicken Wings in Coca Cola Sauce](https://commons.wikimedia.org/wiki/File:Chicken_Wings_in_Coca_Cola_Sauce.jpg) | Alpha from Melbourne, Australia | CC BY-SA 2.0 |
-| `assets/img/hero/lahpet.jpg` | [Fermented Tea Leaf Salad](https://commons.wikimedia.org/wiki/File:Fermented_Tea_Leaf_Salad.jpg) | Saosukham | CC0 1.0 |
 | `assets/img/hero/srilanka-curry.jpg` | [Sri Lankan Rice and Curry](https://commons.wikimedia.org/wiki/File:Sri_Lankan_Rice_and_Curry.jpg) | Lankan Foodie | CC BY-SA 4.0 |
 
 When one of these is replaced with the students' own photo, remove its row here; the credit line on the Info page updates by itself.

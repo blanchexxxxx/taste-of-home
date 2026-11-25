@@ -303,6 +303,11 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 .post { max-width: 860px; }
 .post h1 { margin: 16px 0 8px; font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 1.02; letter-spacing: -.045em; font-weight: 700; }
 .post .video { margin: 30px 0 40px; border-radius: var(--r-bubble); }
+.photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 30px 0 40px; align-items: start; }
+.photos--one { grid-template-columns: 1fr; }
+.photos a { display: block; overflow: hidden; border-radius: var(--r-media); border: 1px solid var(--line); background: var(--surface); }
+.photos img { width: 100%; height: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform .6s var(--ease); }
+.photos a:hover img { transform: scale(1.02); }
 .post__summary { font-size: 1.25rem; color: var(--muted); max-width: 60ch; margin: 0 0 28px; }
 .post h2 { margin: 0 0 10px; font-size: 1.5rem; letter-spacing: -.02em; }
 .post__body p { font-size: 1.1rem; max-width: 65ch; }
@@ -312,6 +317,7 @@ button.chip { cursor: pointer; height: 44px; padding: 0 18px; font-size: .98rem;
 .post__list li::marker { color: var(--muted); }
 .post__list h3 { margin: 22px 0 6px; font-size: 1.1rem; font-weight: 600; color: var(--lime); letter-spacing: -.01em; }
 .post__list h2 + h3 { margin-top: 4px; }
+.post__note { margin: 26px 0 0 !important; max-width: 65ch; color: var(--muted); font-size: 1rem !important; }
 .post__keywords dl { margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .post__keywords dl > div { padding: 10px 16px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); max-width: 100%; }
 .post__keywords dt { font-weight: 600; }
