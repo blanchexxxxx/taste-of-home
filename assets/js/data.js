@@ -134,7 +134,7 @@ window.POSTS = [
     ],
     video: 'assets/videos/myanmar-2.mp4', poster: 'assets/img/posters/myanmar-2.jpg'
   },
-  { id: 'sri-lanka',      location: 'colombo',  author: null, title: null, summary: null, body: null, video: null, poster: null },
+  { id: 'sri-lanka',      location: 'colombo',  author: 'Tharusha Dasunpriya', title: null, summary: null, body: null, video: null, poster: null },
   {
     id: 'australia', location: 'melbourne', author: 'Martin Parsons', role: 'teacher',
     title: 'Pavlova',
@@ -167,9 +167,9 @@ window.POSTS = [
    Photos with a `url` are placeholders from Wikimedia Commons (credited on the Info page); the others are the class's own photos.
    Replace with your own photos any time: put the file in assets/img/hero/ and edit this list. */
 window.HERO_PHOTOS = [
-  { src: 'assets/img/hero/pavlova.jpg',           alt: 'Pavlova with cream and strawberries (Australia)' },
-  { src: 'assets/img/hero/noodles.jpg',           alt: 'Homemade Chinese stir-fry noodles',  credit: 'Sonny doe, CC BY-SA 4.0',                  url: 'https://commons.wikimedia.org/wiki/File:Homemade_Chinese_stir_fry_noodles.jpg' },
-  { src: 'assets/img/hero/ayam-geprek.jpg',     alt: 'Ayam Geprek, crushed fried chicken with sambal (Indonesia)' },
-  { src: 'assets/img/hero/mohinga.jpg',           alt: 'Mohinga, Myanmar fish noodle soup',  credit: 'Allervous, CC BY-SA 4.0',                  url: 'https://commons.wikimedia.org/wiki/File:Mohinga_(20250315).jpg' },
-  { src: 'assets/img/hero/curry.jpg',             alt: 'Sri Lankan chicken curry',           credit: 'Swarnamala Priyadarshani, CC BY-SA 4.0',   url: 'https://commons.wikimedia.org/wiki/File:Sri_lankan_chicken_curry.jpg' }
+  { src: 'assets/img/hero/pavlova.jpg',        alt: 'Pavlova with cream and strawberries (Australia)' },
+  { src: 'assets/img/hero/cola-wings.jpg',     alt: 'Coca-Cola chicken wings (China)',                    credit: 'Alpha from Melbourne, CC BY-SA 2.0',  url: 'https://commons.wikimedia.org/wiki/File:Chicken_Wings_in_Coca_Cola_Sauce.jpg' },
+  { src: 'assets/img/hero/ayam-geprek.jpg',    alt: 'Ayam Geprek, crushed fried chicken with sambal (Indonesia)' },
+  { src: 'assets/img/hero/lahpet.jpg',         alt: 'Lahpet, Myanmar fermented tea leaf salad',           credit: 'Saosukham, CC0',                      url: 'https://commons.wikimedia.org/wiki/File:Fermented_Tea_Leaf_Salad.jpg' },
+  { src: 'assets/img/hero/srilanka-curry.jpg', alt: 'Sri Lankan rice and curry',                          credit: 'Lankan Foodie, CC BY-SA 4.0',         url: 'https://commons.wikimedia.org/wiki/File:Sri_Lankan_Rice_and_Curry.jpg' }
 ];
