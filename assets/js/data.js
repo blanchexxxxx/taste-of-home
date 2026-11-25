@@ -9,13 +9,13 @@
    - ingredients: a list of strings; steps: a list of strings (numbered for you).
      Either can be split into groups: [{ title: 'Sambal', items: ['...', '...'] }, ...].
      Leave either as null to show "coming soon". These appear once body, ingredients or steps is filled in.
-   - role: 'teacher' shows "Our teacher" instead of "Student" when author is empty.
+   - role: 'teacher' marks our professor (shown as "Professor" next to the name and first in the Info page team).
    - video:
-       * a file in this repo, e.g. 'assets/videos/shenzhen.mp4'
-         (keep each file under ~50 MB; compress first), or
+       * a file in this repo, e.g. 'assets/videos/<post id>.mp4'
+         (GitHub's limit is 100 MB per file; compress to 720p first), or
        * an embed URL, e.g. 'https://www.youtube.com/embed/VIDEO_ID'
          or 'https://player.bilibili.com/player.html?bvid=BVxxxx'
-   - poster: optional cover image, e.g. 'assets/img/shenzhen.jpg'
+   - poster: optional cover image, e.g. 'assets/img/posters/<post id>.jpg' (a frame from the video)
    - location: one of the keys in LOCATIONS below (or null if unknown).
      Posts that share a location share one globe label; the popup lists them all.
    - side: which side of the line end the globe label sits on ('left' / 'right').
@@ -32,7 +32,7 @@ window.LOCATIONS = {
 
 window.POSTS = [
   {
-    id: 'china-shenzhen', location: 'shenzhen', author: null,
+    id: 'china-shenzhen', location: 'shenzhen', author: 'Wang Shuyi',
     title: 'Coca-Cola Chicken Wings',
     summary: null,
     body: null,
@@ -46,10 +46,10 @@ window.POSTS = [
       'Add soy sauce, oyster sauce, sugar, and dark soy sauce.',
       'Cook over high heat for 15 minutes until the sauce becomes thick.'
     ],
-    video: null, poster: null
+    video: 'assets/videos/china-shenzhen.mp4', poster: 'assets/img/posters/china-shenzhen.jpg'
   },
   {
-    id: 'indonesia', location: 'surabaya', author: null,
+    id: 'indonesia', location: 'surabaya', author: 'Patrick Benedikt',
     title: 'Ayam Geprek',
     summary: null,
     body: [
@@ -87,7 +87,7 @@ window.POSTS = [
         'Put the sambal on top of the chicken and crush it with the pestle'
       ] }
     ],
-    video: null, poster: null
+    video: 'assets/videos/indonesia.mp4', poster: 'assets/img/posters/indonesia.jpg'
   },
   {
     id: 'myanmar-1', location: 'yangon', author: null,
@@ -111,10 +111,32 @@ window.POSTS = [
     ],
     video: null, poster: null
   },
-  { id: 'myanmar-2',      location: 'yangon',   author: null, title: null, summary: null, body: null, video: null, poster: null },
+  {
+    id: 'myanmar-2', location: 'yangon', author: 'Aung Moe',
+    title: 'Kyawk Kyaw (Myanmar Coconut Jelly)',
+    summary: null,
+    body: [
+      'Kyawk Kyaw (pronounced Chhow Chhow) is a dessert that you can normally see in the streets of the festival in Myanmar. It is made with coconut milk and agar agar powder (寒天 in Japanese). The beauty of it is that the dessert separates itself into two layers by itself when it sets. The top is a pure white coconut layer and the bottom is the transparent water layer.',
+      'Kyawk Kyaw has a firm, yet soft texture that you might not find in Japan. As you bite it, you can feel like biting a boiled egg. It also has a coconut flavor that is not too strong. There are jellies with different flavors in Myanmar, but now I will introduce the traditional Myanmar Jelly made with coconut milk.'
+    ],
+    ingredients: [
+      { title: 'For around 6 or 7 people', items: ['Water (600 ml)', 'Coconut milk (200 ml)', 'Agar agar powder (2 tbsp)', 'Sugar (4 tbsp)', 'Salt (a little bit)'] }
+    ],
+    steps: [
+      'Prepare 600 ml of water, 4 tablespoons of sugar, a pinch of salt, and 2 tablespoons of agar-agar powder.',
+      'Combine all the ingredients in a pot and bring the mixture to a boil over high heat.',
+      'Once the agar-agar powder has completely dissolved, add the prepared coconut milk.',
+      'Reduce the heat and simmer until the mixture comes to a boil. Once it starts boiling, continue simmering for exactly 1 more minute.',
+      'Turn off the heat and carefully pour the mixture into a container.',
+      'Let it cool and set at room temperature.',
+      'Once the jelly has solidified, place it in the refrigerator for about 1 hour to chill.',
+      'Once chilled, your Myanmar coconut jelly (Kyauk Kyaw) is ready to enjoy!'
+    ],
+    video: 'assets/videos/myanmar-2.mp4', poster: 'assets/img/posters/myanmar-2.jpg'
+  },
   { id: 'sri-lanka',      location: 'colombo',  author: null, title: null, summary: null, body: null, video: null, poster: null },
   {
-    id: 'australia', location: 'melbourne', author: null, role: 'teacher',
+    id: 'australia', location: 'melbourne', author: 'Martin Parsons', role: 'teacher',
     title: 'Pavlova',
     summary: null,
     body: [
@@ -137,7 +159,7 @@ window.POSTS = [
       'Beat heavy cream in a medium bowl until stiff peaks form; set aside. Remove meringue from the parchment paper and place on a flat serving plate.',
       'Fill centre of meringue with whipped cream and top with sliced fresh fruit.'
     ],
-    video: null, poster: null
+    video: 'assets/videos/australia.mp4', poster: 'assets/img/posters/australia.jpg'
   }
 ];
 

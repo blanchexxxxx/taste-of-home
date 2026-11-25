@@ -14,7 +14,7 @@
   <meta property="og:image" content="https://blanchexxxxx.github.io/taste-of-home/assets/img/globe-1k.jpg">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/outfit-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=202611240100">
+  <link rel="stylesheet" href="assets/css/style.css?v=202611250300">
 </head>
 <body>
   <header class="topbar">
@@ -53,14 +53,8 @@
           <div class="panel panel--wide reveal">
             <h2 data-i18n="info.teamH">Our team</h2>
             <p data-i18n="info.teamP">Names and photos coming soon.</p>
-            <!-- TODO: replace each <span> with <img src="assets/img/team/NAME.jpg" alt="NAME"> and the text with the name -->
-            <div class="team">
-              <div><span></span><b data-i18n="post.student">Student</b></div>
-              <div><span></span><b data-i18n="post.student">Student</b></div>
-              <div><span></span><b data-i18n="post.student">Student</b></div>
-              <div><span></span><b data-i18n="post.student">Student</b></div>
-              <div><span></span><b data-i18n="post.student">Student</b></div>
-            </div>
+            <!-- Filled in from the posts in assets/js/data.js (author, role, location). -->
+            <div class="team" id="team"></div>
           </div>
           <div class="panel reveal">
             <h2 data-i18n="info.contactH">Contact</h2>
@@ -102,11 +96,11 @@
     </div>
   </footer>
 
-  <script src="assets/js/icons.js?v=202611240100" defer></script>
-  <script src="assets/js/i18n.js?v=202611240100" defer></script>
-  <script src="assets/js/data.js?v=202611240100" defer></script>
-  <script src="assets/js/posts-i18n.js?v=202611240100" defer></script>
-  <script src="assets/js/common.js?v=202611240100" defer></script>
-  <script src="assets/js/pages.js?v=202611240100" defer></script>
+  <script src="assets/js/icons.js?v=202611250300" defer></script>
+  <script src="assets/js/i18n.js?v=202611250300" defer></script>
+  <script src="assets/js/data.js?v=202611250300" defer></script>
+  <script src="assets/js/posts-i18n.js?v=202611250300" defer></script>
+  <script src="assets/js/common.js?v=202611250300" defer></script>
+  <script src="assets/js/pages.js?v=202611250300" defer></script>
 </body>
 </html>

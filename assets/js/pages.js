@@ -57,6 +57,22 @@
     }).join(', ') + '.' : '';
   }
 
+  /* ---------- info: team (from the posts' authors; the professor first) ---------- */
+  var team = document.getElementById('team');
+  function renderTeam() {
+    var people = window.POSTS.filter(function (p) { return p.role === 'teacher'; })
+      .concat(window.POSTS.filter(function (p) { return p.role !== 'teacher'; }));
+    team.innerHTML = people.map(function (p) {
+      var name = T.pick(p.author), l = locOf(p);
+      var initials = name ? name.split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase() : '';
+      var role = p.role === 'teacher' ? t('post.professor') : t('post.student');
+      return '<div><span class="' + (name ? 'is-named' : '') + '">' + esc(initials) + '</span>' +
+        '<b>' + esc(name || t('post.student')) + '</b>' +
+        '<small>' + esc(name ? role + (l ? ' · ' + t('country.' + l.country) : '') : (l ? t('country.' + l.country) : '')) + '</small></div>';
+    }).join('');
+  }
+  if (team) { renderTeam(); document.addEventListener('langchange', renderTeam); }
+
   /* ---------- posts grid ---------- */
   var grid = document.getElementById('posts-grid');
   function renderGrid() {

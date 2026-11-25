@@ -116,7 +116,11 @@
     return pick(p[field]);
   }
   function postTitle(p) { return postField(p, 'title') || t('post.titleSoon'); }
-  function postAuthor(p) { return pick(p.author) || t(p.role === 'teacher' ? 'post.teacher' : 'post.student'); }
+  function postAuthor(p) {
+    var name = pick(p.author);
+    if (p.role === 'teacher') return name ? name + ' (' + t('post.professor') + ')' : t('post.teacher');
+    return name || t('post.student');
+  }
   function placeLabel(p) {
     var loc = p.location && window.LOCATIONS[p.location];
     if (!loc) return t('posts.tba');
