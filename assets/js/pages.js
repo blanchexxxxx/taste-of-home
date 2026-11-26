@@ -74,7 +74,7 @@
   if (team) { renderTeam(); document.addEventListener('langchange', renderTeam); }
 
   /* ---------- news (assets/js/news.js): cards on the Info page + the article page ---------- */
-  function newsText(n) { return n[T.getLang()] || n.en; }
+  function newsText(n) { return n.text[T.getLang()] || n.text.en; }
   function newsUrl(n) { return 'news.html?id=' + encodeURIComponent(n.id); }
 
   var newsList = document.getElementById('news-list');
