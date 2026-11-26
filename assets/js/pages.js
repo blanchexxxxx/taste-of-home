@@ -73,6 +73,52 @@
   }
   if (team) { renderTeam(); document.addEventListener('langchange', renderTeam); }
 
+  /* ---------- news (assets/js/news.js): cards on the Info page + the article page ---------- */
+  function newsText(n) { return n[T.getLang()] || n.en; }
+  function newsUrl(n) { return 'news.html?id=' + encodeURIComponent(n.id); }
+
+  var newsList = document.getElementById('news-list');
+  function renderNewsList() {
+    newsList.innerHTML = (window.NEWS || []).map(function (n) {
+      var x = newsText(n);
+      return '<a class="news-card reveal is-in" href="' + newsUrl(n) + '">' +
+        '<div class="news-card__img"><img src="' + esc(n.cover) + '" alt="" loading="lazy"></div>' +
+        '<div class="news-card__body"><span class="chip chip--grad">' + esc(t('info.reportTag')) + '</span>' +
+        '<h2>' + esc(x.title) + '</h2><p>' + esc(x.dek) + '</p><p class="news-card__meta">' + esc(x.meta) + '</p>' +
+        '<span class="btn btn--grad">' + esc(t('info.readArticle')) + T.icon('arrow-right') + '</span></div></a>';
+    }).join('');
+  }
+  if (newsList) { renderNewsList(); document.addEventListener('langchange', renderNewsList); }
+
+  var newsEl = document.getElementById('news');
+  function renderNews() {
+    var id = new URLSearchParams(location.search).get('id'), n = null;
+    (window.NEWS || []).forEach(function (x) { if (x.id === id) n = x; });
+    if (!n && window.NEWS && window.NEWS.length && !id) n = window.NEWS[0];
+    var back = '<a class="pill-btn back" href="info.html">' + T.icon('arrow-left') + esc(t('info.backInfo')) + '</a>';
+    if (!n) { newsEl.innerHTML = back + '<p class="placeholder">' + esc(t('post.notFound')) + '</p>'; return; }
+    var x = newsText(n);
+    document.title = x.title + ' | Taste of Home';
+    function fig(inner, cap, cls) {
+      return '<figure' + (cls ? ' class="' + cls + '"' : '') + '>' + inner + (cap ? '<figcaption>' + esc(cap) + '</figcaption>' : '') + '</figure>';
+    }
+    function img(src) { return '<a href="' + esc(src) + '" target="_blank" rel="noopener"><img src="' + esc(src) + '" alt="" loading="lazy"></a>'; }
+    var body = x.blocks.map(function (b) {
+      if (b.p) return '<p>' + esc(b.p) + '</p>';
+      if (b.img) return fig(img(b.img), b.caption, /tall|desserts/.test(b.img) ? 'is-tall' : '');
+      if (b.imgs) return fig('<div class="news__pair">' + b.imgs.map(img).join('') + '</div>', b.caption);
+      if (b.video) return fig('<div class="video"><video controls playsinline preload="metadata"' + (b.poster ? ' poster="' + esc(b.poster) + '"' : '') + ' src="' + esc(b.video) + '"></video></div>', b.caption);
+      return '';
+    }).join('');
+    newsEl.innerHTML = back +
+      '<div><span class="chip chip--grad">' + esc(t('info.reportTag')) + '</span></div>' +
+      '<h1>' + esc(x.title) + '</h1>' +
+      '<p class="news__dek">' + esc(x.dek) + '</p>' +
+      '<p class="news__meta">' + esc(x.meta) + '</p>' +
+      '<div class="news__body">' + body + '</div>';
+  }
+  if (newsEl) { renderNews(); document.addEventListener('langchange', renderNews); }
+
   /* ---------- posts grid ---------- */
   var grid = document.getElementById('posts-grid');
   function renderGrid() {
