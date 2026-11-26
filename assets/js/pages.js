@@ -115,7 +115,8 @@
       '<h1>' + esc(x.title) + '</h1>' +
       '<p class="news__dek">' + esc(x.dek) + '</p>' +
       '<p class="news__meta">' + esc(x.meta) + '</p>' +
-      '<div class="news__body">' + body + '</div>';
+      '<div class="news__body">' + body + '</div>' +
+      (n.author ? '<p class="news__byline">' + esc(t('news.by')) + ' <b>' + esc(n.author) + '</b></p>' : '');
   }
   if (newsEl) { renderNews(); document.addEventListener('langchange', renderNews); }
 

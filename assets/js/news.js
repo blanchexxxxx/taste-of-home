@@ -1,5 +1,5 @@
 /* News articles (shown on the Info page and at news.html?id=...).
-   text holds one entry per language code: { title, dek, meta, blocks } (kept apart from id, since 'id' is also Indonesian).
+   author is shown at the end of the article. text holds one entry per language code: { title, dek, meta, blocks } (kept apart from id, since 'id' is also Indonesian).
    blocks: { p: 'paragraph' } | { img: 'path', caption } | { imgs: ['a', 'b'], caption } | { video, poster, caption }.
    Machine-assisted translations: native speakers are welcome to correct them here. */
 
@@ -8,6 +8,7 @@ window.NEWS = [
     "id": "food-day",
     "date": "2026-11-25",
     "cover": "assets/img/food-day/group.jpg",
+    "author": "Wang Shuyi",
     "text": {
       "en": {
         "title": "Food Day: a table full of home cooking",
@@ -38,7 +39,7 @@ window.NEWS = [
           {
             "video": "assets/videos/food-day.mp4",
             "poster": "assets/img/food-day/long-table.jpg",
-            "caption": "Highlights from the day, from mixing Lahpet Thoke to the busy lunch table (1 minute)."
+            "caption": "Highlights from the day, from mixing Lahpet Thoke to the busy lunch table (1 minute). Miyoshi-sensei from the Faculty of Informatics (総合情報学部) also tasted the Myanmar tea leaf salad and shared their thoughts with us."
           },
           {
             "imgs": [
@@ -85,7 +86,7 @@ window.NEWS = [
           {
             "video": "assets/videos/food-day.mp4",
             "poster": "assets/img/food-day/long-table.jpg",
-            "caption": "当天精彩瞬间：从拌缅甸茶叶沙拉（Lahpet Thoke）到热闹的午餐桌（1分钟）。"
+            "caption": "当天精彩瞬间：从拌缅甸茶叶沙拉（Lahpet Thoke）到热闹的午餐桌（1分钟）。综合情报学部（総合情報学部）的三好老师也品尝了缅甸茶叶沙拉，并给予了评价。"
           },
           {
             "imgs": [
@@ -132,7 +133,7 @@ window.NEWS = [
           {
             "video": "assets/videos/food-day.mp4",
             "poster": "assets/img/food-day/long-table.jpg",
-            "caption": "ラペットゥ（茶葉のサラダ）を混ぜるところから、にぎやかなランチテーブルまで、当日のハイライト（1分）。"
+            "caption": "ラペットゥ（茶葉のサラダ）を混ぜるところから、にぎやかなランチテーブルまで、当日のハイライト（1分）。総合情報学部の三好先生もミャンマーの茶葉サラダを味わい、感想を聞かせてくださいました。"
           },
           {
             "imgs": [
@@ -179,7 +180,7 @@ window.NEWS = [
           {
             "video": "assets/videos/food-day.mp4",
             "poster": "assets/img/food-day/long-table.jpg",
-            "caption": "Sorotan hari itu, mulai dari mengaduk Lahpet Thoke hingga meja makan siang yang ramai (1 menit)."
+            "caption": "Sorotan hari itu, mulai dari mengaduk Lahpet Thoke hingga meja makan siang yang ramai (1 menit). Miyoshi-sensei dari Fakultas Informatika (総合情報学部) juga mencicipi salad daun teh Myanmar dan memberikan komentarnya."
           },
           {
             "imgs": [
@@ -226,7 +227,7 @@ window.NEWS = [
           {
             "video": "assets/videos/food-day.mp4",
             "poster": "assets/img/food-day/long-table.jpg",
-            "caption": "လက်ဖက်သုပ် သုပ်သည့်အချိန်မှစ၍ လူစည်ကားနေသော နေ့လယ်စာ စားပွဲအထိ ထိုနေ့၏ မှတ်တမ်းတင်ဖွယ် အခိုက်အတန့်များ (၁ မိနစ်)။"
+            "caption": "လက်ဖက်သုပ် သုပ်သည့်အချိန်မှစ၍ လူစည်ကားနေသော နေ့လယ်စာ စားပွဲအထိ ထိုနေ့၏ မှတ်တမ်းတင်ဖွယ် အခိုက်အတန့်များ (၁ မိနစ်)။ 総合情報学部 (Faculty of Informatics) မှ Miyoshi-sensei လည်း မြန်မာ လက်ဖက်သုပ်ကို မြည်းစမ်းပြီး အမြင်ကို မျှဝေပေးခဲ့ပါတယ်။"
           },
           {
             "imgs": [
@@ -273,7 +274,7 @@ window.NEWS = [
           {
             "video": "assets/videos/food-day.mp4",
             "poster": "assets/img/food-day/long-table.jpg",
-            "caption": "දවසේ විශේෂ අවස්ථා – ලැපෙට් තෝක් (Lahpet Thoke) මිශ්‍ර කිරීමේ සිට සෙනඟ පිරුණු දිවා ආහාර මේසය දක්වා (විනාඩි 1)."
+            "caption": "දවසේ විශේෂ අවස්ථා – ලැපෙට් තෝක් (Lahpet Thoke) මිශ්‍ර කිරීමේ සිට සෙනඟ පිරුණු දිවා ආහාර මේසය දක්වා (විනාඩි 1). 総合情報学部 (Faculty of Informatics) හි Miyoshi-sensei ද මියන්මාර් තේ කොළ සලාදය රස බලා අදහස් ලබා දුන්නා."
           },
           {
             "imgs": [
@@ -320,7 +321,7 @@ window.NEWS = [
           {
             "video": "assets/videos/food-day.mp4",
             "poster": "assets/img/food-day/long-table.jpg",
-            "caption": "அன்றைய சிறப்புத் தருணங்கள் – லபெட் தோக் (Lahpet Thoke) கலப்பது முதல் கலகலப்பான மதிய உணவு மேசை வரை (1 நிமிடம்)."
+            "caption": "அன்றைய சிறப்புத் தருணங்கள் – லபெட் தோக் (Lahpet Thoke) கலப்பது முதல் கலகலப்பான மதிய உணவு மேசை வரை (1 நிமிடம்). 総合情報学部 (Faculty of Informatics) இன் Miyoshi-sensei அவர்களும் மியான்மர் தேயிலைச் சலாதைச் சுவைத்து தமது கருத்தைப் பகிர்ந்தார்."
           },
           {
             "imgs": [
