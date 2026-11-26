@@ -94,7 +94,7 @@
   function renderNews() {
     var id = new URLSearchParams(location.search).get('id'), n = null;
     (window.NEWS || []).forEach(function (x) { if (x.id === id) n = x; });
-    if (!n && window.NEWS && window.NEWS.length && !id) n = window.NEWS[0];
+    if (!n && window.NEWS && window.NEWS.length) n = window.NEWS[0];   // unknown or missing id: show the latest article
     var back = '<a class="pill-btn back" href="info.html">' + T.icon('arrow-left') + esc(t('info.backInfo')) + '</a>';
     if (!n) { newsEl.innerHTML = back + '<p class="placeholder">' + esc(t('post.notFound')) + '</p>'; return; }
     var x = newsText(n);
